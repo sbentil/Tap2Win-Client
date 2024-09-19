@@ -13,10 +13,7 @@ import { queryClient } from "@/app/provider";
 
 export const roleToMap = new Map([
   ["admin", IRoles.ADMIN],
-  ["admin_reporter", IRoles.ADMIN_REPORTER],
-  ["partner_admin", IRoles.PARTNER_ADMIN],
-  ["partner_reporter", IRoles.PARTNER_REPORTER],
-  ["bulk_initiator", IRoles.BULK_INITIATOR],
+  ["organizer", IRoles.ORGANIZER],
 ]);
 
 // new Map();
@@ -24,20 +21,22 @@ export type AuthUserDto = {
   isAuthenticated: boolean;
   role: IRoles;
   email: string;
-  publicName: string;
-  schoolName: string;
-  schoolEmail: string;
-  profileImageUrl: string;
+  name: string;
+  phone: string;
+  createdAt: string;
+  updatedAt: string;
+  _id: string;
 };
 function newauthUserDto() {
   return {
     isAuthenticated: false,
-    role: "user",
+    role: "admin",
     email: "",
-    publicName: "",
-    schoolName: "",
-    schoolEmail: "",
-    profileImageUrl: "",
+    phone: "",
+    name: "",
+    createdAt: "",
+    updatedAt: "",
+    _id: "",
   };
 }
 
@@ -107,22 +106,17 @@ export class AuthServiceTSQ implements IauthService {
   }
 
   public isRole(roles: IRoles[]) {
-    return roles.includes(this.getAuthUser()?.role ?? IRoles.ADMIN); 
+    return roles.includes(this.getAuthUser()?.role ?? IRoles.ADMIN);
   }
 
-  public login() {
-    window.location.href = `${apiUrl}/api/authentication/google/login`;
-  }
 
   // Apparently
   async getUserData() {
     return await Axios.get("/users/me").then(
       (res: any) => {
-        // console.log("USER DATE : ", res.data);
         const userObject = {
           ...res.data,
           isAuthenticated: true,
-          role: roleToMap.get(res.data.role ?? "user"),
         } as AuthUserDto;
         this._queryClient.setQueryData([AuthQueryKeys.AuthUser], userObject);
         return userObject;
@@ -164,18 +158,18 @@ export class AuthServiceTSQ implements IauthService {
     });
   }
 
-  public async refreshToken (failedRequest:any) {
+  public async refreshToken(failedRequest: any) {
     const refresh_token = Cookies.get("refresh_token");
     if (refresh_token !== undefined)
       return Axios
-        .post("/auth/refresh", { refreshToken: refresh_token })
+        .post("/user/refresh-token", { refreshToken: refresh_token })
         .then((res) => {
-          Cookies.set("access_token", res.data.accessToken);
-          Cookies.set("refresh_token", res.data.refreshToken);
-          Cookies.set("TrybzExpToken", res.data.expiresAt);
+          Cookies.set("access_token", res.data.access_token);
+          Cookies.set("refresh_token", res.data.refresh_token);
+          Cookies.set("Tap2WinExpToken", res.data.expiresAt);
 
           failedRequest.response.config.headers["Authorization"] =
-            "Bearer " + res.data;
+            "Bearer " + res.data.access_token;
           return Promise.resolve();
         });
   }

@@ -3,12 +3,11 @@
 import * as Yup from 'yup';
 
 import { Button, Input } from '@/components/core';
-import React, { FC } from "react";
 
-import { IRoles } from '@/models/user.model';
 import Link from 'next/link';
-import { setCookie } from 'typescript-cookie';
-import { setLocalUser } from '@/hooks/useSessionData';
+import React from "react";
+import UserService from '@/services/user.service';
+import toasts from '@/utils/toasts';
 import { useAuthContext } from '@/hooks/userContext';
 import { useFormik } from 'formik';
 
@@ -17,31 +16,26 @@ const LoginPage = () => {
     const { login } = useAuthContext();
     const { handleSubmit, ...form } = useFormik({
         initialValues: {
-            email: "",
-            password: "",
+            phone: "",
+            pin: "",
         },
         validationSchema: Yup.object().shape({
-            email: Yup.string().email().required(),
-            password: Yup.string().min(8).max(12).required(),
+            phone: Yup.string().length(10).required(),
+            pin: Yup.string().length(6).required(),
         }),
         onSubmit: async (values) => {
             setLoading(true);
-            // setLocalUser({
-            //     role: process.env.NEXT_PUBLIC_USER_ROLE as IRoles,
-            //     _id: process.env.NEXT_PUBLIC_USER_ID!,
-            //     email: values.email,
-            //     name: process.env.NEXT_PUBLIC_USER_NAME!,
-            //     phone: process.env.NEXT_PUBLIC_USER_PHONE!,
-            // });
-            const user = {
-                role: process.env.NEXT_PUBLIC_USER_ROLE as IRoles,
-                _id: process.env.NEXT_PUBLIC_USER_ID!,
-                email: values.email,
-                name: process.env.NEXT_PUBLIC_USER_NAME!,
-                phone: process.env.NEXT_PUBLIC_USER_PHONE!,
-            }
-            login(user)
-            setCookie("access_token", values.password);
+            UserService.login(values.phone, values.pin, (error, user) => {
+                setLoading(false);
+                if (!error) {
+                    login(user);
+                    window.location.href = "/"
+                    toasts.success("Login🎉", "Login Successful");
+                } else {
+                    console.error(error)
+                    toasts.error("Login 👺", error);
+                }
+            });
         },
     });
 
@@ -60,11 +54,11 @@ const LoginPage = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <Input
-                                id="email"
-                                label="Email"
-                                type="email"
+                                id="phone"
+                                label="Phone"
+                                type="text"
                                 required
-                                placeholder='eg. user@yopmail.com'
+                                placeholder='eg. 0233445567'
                                 onChange={form.handleChange}
                                 onBlur={form.handleBlur}
                                 validation={form}
@@ -73,9 +67,9 @@ const LoginPage = () => {
 
                         <div className="space-y-1">
                             <Input
-                                id="password"
-                                label="Password"
-                                type="password"
+                                id="pin"
+                                label="Pin"
+                                type="text"
                                 required
                                 placeholder='e.g.  ..............'
                                 onChange={form.handleChange}
