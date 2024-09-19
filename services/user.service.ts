@@ -38,6 +38,39 @@ class UserService {
             callback(message);
         }
     }
+    static getUsers = async (filters: { page: number; limit: number; role?: string }) => {
+        try {
+            // Build the query string
+            const queryParams = new URLSearchParams({
+                page: filters.page.toString(),
+                limit: filters.limit.toString(),
+            });
+
+            // Add the 'role' filter if it's provided
+            if (filters.role) {
+                queryParams.append("role", filters.role);
+            }
+
+            // Perform the Axios request with the constructed query string
+            const { data } = await Axios({
+                url: `/user/users?${queryParams.toString()}`,
+                method: "GET",
+            });
+
+            if (data.success) {
+                return {
+                    ...data,
+                };
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (e: any) {
+            const message = e?.response?.data?.error || e?.message || "Check console for error";
+            throw new Error(message);
+        }
+    };
+
+
 }
 
 export default UserService;

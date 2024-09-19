@@ -3,90 +3,88 @@
 import React, { useState } from "react";
 
 import Button from "@/components/core/button";
-import { IUsers } from "@/interfaces/users";
+import { IUser } from "@/interfaces/users";
 import Modal from "@/components/modal";
 import NoRecordsFound from "@/components/empty";
 import Table from "../../../../../components/tables/users";
 import UserForm from "@/components/forms/users";
-import {users as __data} from "../../../../../components/tables/users/__data";
+import useUsers from "@/hooks/useUsers";
 
 const Users = () => {
-  const [users, setUsers] = useState<IUsers[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [metadata, setMetadata] = useState({
-    page: 1,
-    totalCount: users.length,
-    isFetching: false,
-  });
+  // State for handling pagination
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
+  // Fetch users using the useUsers hook
+  const { data, isLoading, error, refetch } = useUsers({ page, limit });
+
+  const users = data?.data.data || [];
+  const totalCount = data?.data.totalCount || 0;
 
   const handleCreateUser = () => {
     setIsModalOpen(true);
-    setUsers(__data)
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-   const paginationHandler = (action: "first" | "last" | "next" | "prev") => {
-     const totalPages = Math.ceil(metadata.totalCount / 10);
+  const paginationHandler = (action: "first" | "last" | "next" | "prev") => {
+    const totalPages = Math.ceil(totalCount / limit);
 
-     switch (action) {
-       case "first":
-         setMetadata({ ...metadata, page: 1 });
-         break;
-       case "last":
-         setMetadata({ ...metadata, page: totalPages });
-         break;
-       case "next":
-         if (metadata.page < totalPages) {
-           setMetadata({ ...metadata, page: metadata.page + 1 });
-         }
-         break;
-       case "prev":
-         if (metadata.page > 1) {
-           setMetadata({ ...metadata, page: metadata.page - 1 });
-         }
-         break;
-     }
-   };
+    switch (action) {
+      case "first":
+        setPage(1);
+        break;
+      case "last":
+        setPage(totalPages);
+        break;
+      case "next":
+        if (page < totalPages) {
+          setPage(page + 1);
+        }
+        break;
+      case "prev":
+        if (page > 1) {
+          setPage(page - 1);
+        }
+        break;
+    }
+  };
 
+  if (isLoading) {
+    return <div>Loading users...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading users: {error.message}</div>;
+  }
 
   return (
     <div className="h-[92vh] p-4">
-      {!!!users.length && (
+      {users.length === 0 ? (
         <div className="flex h-screen flex-col items-center justify-center p-4">
           <NoRecordsFound entity="Users" onCreate={handleCreateUser} />
         </div>
-      )}
-      {users && (
+      ) : (
         <Table
-          onCreate={handleCreateUser}
           data={users}
-          metadata={metadata}
+          metadata={{
+            page,
+            totalCount,
+            isFetching: isLoading,
+          }}
           onFirst={() => paginationHandler("first")}
           onPrev={() => paginationHandler("prev")}
           onNext={() => paginationHandler("next")}
           onLast={() => paginationHandler("last")}
         />
       )}
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        title="Create User"
-        size="xl"
-        footer={
-          <div className="flex gap-10 p-5 w-full item-center justify-center">
-            <Button variant="outline" text="Create User" type="submit" />
-            <Button variant="primary" text="Save" className="min-w-[150px]" />
-          </div>
+        {
+          
         }
-      >
-        <UserForm />
-      </Modal>
     </div>
   );
 };

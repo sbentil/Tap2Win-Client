@@ -141,14 +141,11 @@ function Table<T>({
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value.toLowerCase();
     const filteredData = data.filter((item) =>
-      columns.some((column) => column.options.filter && column.selector(item).toLowerCase().includes(searchValue))
+      columns.some((column) => column.options.filter && column.selector(item)?.toLowerCase().includes(searchValue))
     );
     setVisibleData(filteredData);
   };
 
-  // const sortedData = useMemo(() => {
-  //   return sortData(columns.find(c => c.title === sortColumn)!, sortOrder);
-  // }, [data, sortColumn, sortOrder]);
   
 
 

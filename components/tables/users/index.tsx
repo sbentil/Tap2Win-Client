@@ -1,22 +1,22 @@
 "use client";
 
+import ActionButton from "@/components/table/action";
 import { Button } from "@/components/core";
 import { Columns } from "./columns";
-import { IUsers } from "@/interfaces/users";
+import { CreateUserModal } from "@/components/modals";
+import { IUser } from "@/interfaces/users";
 import { TableComponent } from "@/components/table";
 import ViewModal from "./view";
 import { objToStr } from "@/helpers/object";
 import toasts from "@/utils/toasts";
 import { useState } from "react";
-import ActionButton from "@/components/table/action";
 
 interface Props {
-  data: IUsers[];
-  onCreate: () => void;
+  data: IUser[];
   metadata: {
     page: number;
-    totalCount: number; 
-    isFetching: boolean; 
+    totalCount: number;
+    isFetching: boolean;
   };
   onNext: () => void;
   onPrev: () => void;
@@ -26,11 +26,11 @@ interface Props {
 
 const Table: React.FC<Props> = ({
   data,
-  onCreate,
 }) => {
   const [viewItem, setViewItem] = useState<boolean>(false);
-  const [selected, setSelected] = useState<IUsers | null>(null);
-
+  const [editItem, setEditItem] = useState<boolean>(false);
+  const [selected, setSelected] = useState<IUser | null>(null);
+  const [create, setCreate] = useState<boolean>(false)
   const [metadata, setMetadata] = useState({
     page: 1,
     totalCount: data.length,
@@ -43,8 +43,8 @@ const Table: React.FC<Props> = ({
   };
 
   const onEdit = (item: any) => {
-    console.log(item);
-    toasts.info("Edited", objToStr(item));
+    setSelected(item);
+    setEditItem(true)
   };
 
   const onDeactivate = (item: any) => {
@@ -55,16 +55,8 @@ const Table: React.FC<Props> = ({
   const Actions = () => {
     return (
       <div className="flex items-center gap-4">
-        <Button variant="primary" className="gap-2" onClick={onCreate}>
+        <Button variant="primary" className="gap-2" onClick={() => setCreate(true)}>
           Create New User
-        </Button>
-        <Button
-          variant="outline"
-          className="gap-2 min-w-[200px]"
-          type="link"
-          href="users/audit-report"
-        >
-          View Audit Report
         </Button>
       </div>
     );
@@ -104,13 +96,13 @@ const Table: React.FC<Props> = ({
         filterRender={<Actions />}
         actions={[
           {
-            element: <ActionButton color="success" label="Edit" />,
+            element: <ActionButton color="success" label="Update" />,
             onClick: (rowData: any) => onEdit(rowData),
           },
-          {
-            element: <ActionButton color="danger" label="Deactivate" />,
-            onClick: (rowData: any) => onDeactivate(rowData),
-          },
+          // {
+          //   element: <ActionButton color="danger" label="Deactivate" />,
+          //   onClick: (rowData: any) => onDeactivate(rowData),
+          // },
         ]}
         metadata={metadata}
         onFirst={() => paginationHandler("first")}
@@ -118,9 +110,16 @@ const Table: React.FC<Props> = ({
         onNext={() => paginationHandler("next")}
         onLast={() => paginationHandler("last")}
       />
-      {selected && (
+      {viewItem && selected && (
         <ViewModal state={viewItem} onClose={setViewItem} data={selected} />
       )}
+      {editItem && selected && (
+        <CreateUserModal isOpen={editItem} onClose={() => setEditItem(false)} data={selected} />
+      )}
+      {
+        create && <CreateUserModal isOpen={create} onClose={() => setCreate(false)} />
+      }
+
     </>
   );
 };
