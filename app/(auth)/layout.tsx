@@ -6,7 +6,7 @@ export default function AuthLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <AuthGuard isPublic>
+        <AuthGuard>
             <div className="h-screen bg-gray">
                 <div className="min-h-full flex justify-center items-center relative">
                     <div className="flex flex-col z-10 space-y-10">

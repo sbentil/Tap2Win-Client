@@ -1,10 +1,11 @@
 "use client";
 
+import React, { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
 import BouncingSquaresLoader from "@/components/preloader";
 import { useAuthContext } from "@/hooks/userContext";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { getCookie } from "typescript-cookie";
+import useUserSession from "@/hooks/useUserSession";
 
 const AuthGuard = ({
     children,
@@ -13,50 +14,36 @@ const AuthGuard = ({
     children: React.ReactNode;
     isPublic?: boolean;
 }) => {
-    const [isLoading, setIsLoading] = useState(true);
-    const { isLoggedIn, login } = useAuthContext();
+    const { isLoggedIn } = useAuthContext();
     const router = useRouter();
+    const pathname = usePathname();
+    
+    // Use the custom hook to manage user session
+    const { userToken, userInfo, isLoading, error } = useUserSession();
 
     useEffect(() => {
-        const userToken = getCookie("access_token");
-        const currentUser = getCookie("current_user");
-
-        if (!isLoggedIn && !isPublic) {
-            if (userToken && currentUser) {
-                // UserService.getUserInfo().then((data) => {
-                //     login(data);
-                //     queryClient.setQueryData(["user"], data);
-                //     setShowChildren(true);
-                //     setIsLoading(false);
-                // }).catch((error) => {
-                //     logout();
-                //     if (!isPublic) {
-                //         router.push("/signin");
-                //     }
-                //     setIsLoading(false);
-                // });
-                // Simulate fetching user data from cookies instead of API
-                const parsedUser = JSON.parse(currentUser);
-                login(parsedUser);
-                setIsLoading(false);
-            } else {
-                // User is not logged in, redirect to the sign-in page
+        if (!isPublic) {
+            // If there's an error (no token, failed fetch, etc.), redirect to sign-in
+            if (error) {
                 router.push("/signin");
+            } else if (userInfo) {
+                // If the user is fetched successfully, redirect them to home if they're on the sign-in page
+                if (pathname === "/signin") {
+                    router.push("/");
+                }
             }
-        } else if (isLoggedIn && isPublic) {
-            // User is logged in and trying to access a public page (e.g., sign-in)
+        } else if (isPublic && isLoggedIn) {
+            // If user is logged in and tries to access a public page like sign-in, redirect to home
             router.push("/");
-        } else {
-            // User is logged in and accessing a private page
-            setIsLoading(false);
         }
-    }, [isLoggedIn, router, login, isPublic]);
+    }, [isLoggedIn, userInfo, error, pathname, router, isPublic]);
 
+    // Show loader while checking token or fetching user info
     if (isLoading) {
         return <BouncingSquaresLoader />;
     }
 
-    return children;
+    return <>{children}</>;
 };
 
 export default AuthGuard;

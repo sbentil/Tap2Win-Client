@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({
                 <p
                     className={cn(
                         "w-max flex justify-center py-2 px-4 border rounded shadow-sm text-sm font-normal disabled:cursor-not-allowed",
-                        variant === "primary" && "text-white bg-primary hover:bg-[#3949AB] disabled:bg-gray-light disabled:text-gray",
+                        variant === "primary" && "text-white bg-primary hover:bg-secondary disabled:bg-gray-light disabled:text-gray",
                         variant === "secondary" && "text-white bg-secondary hover:bg-[#7973F0] disabled:bg-gray-light disabled:text-gray",
                         variant === "outline" && "text-primary border-primary hover:text-secondary hover:border-secondary disabled:text-gray disabled:border-gray disabled:bg-white/80",
                         className ?? ""
@@ -51,7 +51,7 @@ const Button: React.FC<ButtonProps> = ({
             onClick={onClick}
             className={cn(
                 "w-max flex justify-center py-2 px-4 border  rounded shadow-sm text-sm font-normal disabled:cursor-not-allowed flex-shrink-0",
-                variant === "primary" && "text-white bg-primary hover:bg-[#3949AB] disabled:bg-gray-light disabled:text-gray",
+                variant === "primary" && "text-white bg-primary hover:bg-secondary disabled:bg-gray-light disabled:text-gray",
                 variant === "secondary" && "text-white bg-secondary hover:bg-[#7973F0] disabled:bg-gray-light disabled:text-gray",
                 variant === "outline" && "text-primary border-primary hover:text-secondary hover:border-secondary disabled:text-gray disabled:border-gray disabled:bg-white/80",
                 className ?? ""

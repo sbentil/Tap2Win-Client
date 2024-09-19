@@ -4,7 +4,6 @@ import { createContext, useCallback, useMemo, useState } from "react";
 import { getCookies, removeCookie } from "typescript-cookie";
 
 import { IUser } from "@/models/user.model";
-import { removeLocalUser } from "@/hooks/useSessionData";
 
 export interface AuthContextType {
   isLoggedIn: boolean;
@@ -35,7 +34,6 @@ export default function AuthContextProvider({
   const login = useCallback((user: IUser) => {
     setIsLoggedIn(true);
     setUser(user);
-    removeLocalUser()
   }, []);
 
 
@@ -43,6 +41,7 @@ export default function AuthContextProvider({
     setIsLoggedIn(false);
     setUser(null);
     removeAllCookies()
+    window.location.href = "/signin"
   }, []);
 
 
