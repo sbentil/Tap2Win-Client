@@ -96,7 +96,7 @@ const Table: React.FC<Props> = ({
         filterRender={<Actions />}
         actions={[
           {
-            element: <ActionButton color="success" label="Update" />,
+            element: <ActionButton label="Update" />,
             onClick: (rowData: any) => onEdit(rowData),
           },
           // {
