@@ -4,14 +4,12 @@ import UserService from '@/services/user.service';
 import { useQuery } from '@tanstack/react-query';
 
 interface IGetUsersResponse {
-    data: {
-        data: IUser[];
-        totalCount: number;
-    }
+    data: IUser[];
     meta: {
         page: number;
         limit: number;
         timestamp: string
+        totalCount: number;
     }
 }
 

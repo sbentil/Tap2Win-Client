@@ -20,8 +20,8 @@ const Users = () => {
   // Fetch users using the useUsers hook
   const { data, isLoading, error, refetch } = useUsers({ page, limit });
 
-  const users = data?.data.data || [];
-  const totalCount = data?.data.totalCount || 0;
+  const users = data?.data || [];
+  const totalCount = data?.meta.totalCount || 0;
 
   const handleCreateUser = () => {
     setIsModalOpen(true);
