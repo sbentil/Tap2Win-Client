@@ -3,6 +3,7 @@ import {
     Home,
     Icon,
     Moneys,
+    Python,
     Setting2,
     User
 } from "iconsax-react";
@@ -41,6 +42,11 @@ export const getRoutes = (role: IRoles): INavItem[] => {
                     name: "Transactions",
                     path: "/transactions",
                     Icon: Moneys,
+                },
+                {
+                    name: "Tokens",
+                    path: "/tokens",
+                    Icon: Python,
                 },
 
                 {

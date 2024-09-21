@@ -1,10 +1,10 @@
-import { IUser, IUserPagination } from '@/interfaces/users';
+import { IEvent, IEventPagination } from './../../interfaces/event';
 
 import AdminService from '@/services/admin.service';
 import { useQuery } from '@tanstack/react-query';
 
 interface IGetUsersResponse {
-    data: IUser[];
+    data: IEvent[];
     meta: {
         page: number;
         limit: number;
@@ -14,10 +14,10 @@ interface IGetUsersResponse {
 }
 
 
-const useUsers = (filters: IUserPagination) => {
+const useEvents = (filters: IEventPagination) => {
     const query = useQuery<IGetUsersResponse, Error>({
-        queryKey: ['users', filters], // Query key includes the filters for refetching based on changes
-        queryFn: () => AdminService.getUsers(filters), // Function to fetch users with the given filters
+        queryKey: ['events', filters], // Query key includes the filters for refetching based on changes
+        queryFn: () => AdminService.getEvents(filters), // Function to fetch users with the given filters
         staleTime: 5000, // Data will be considered fresh for 5 seconds
     });
 
@@ -31,4 +31,4 @@ const useUsers = (filters: IUserPagination) => {
 };
 
 
-export default useUsers
+export default useEvents
