@@ -3,32 +3,21 @@
 import React, { useState } from "react";
 
 import { Button } from "@/components/core";
-import Modal from "@/components/modal";
 import NoRecordsFound from "@/components/empty";
-import Table from "../../../../../components/tables/admin/events";
-import UserForm from "@/components/forms/users";
-import useEvents from "@/hooks/useEvents";
+import Table from "../../../../../components/tables/admin/tokens";
+import useTokens from "@/hooks/useTokens";
 
-const Events = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const Tokens = () => {
 
   // State for handling pagination
   const [page, setPage] = useState(1);
   const limit = 10;
 
   // Fetch events using the useEvents hook
-  const { data, isLoading, error, refetch } = useEvents({ page, limit });
+  const { data, isLoading, error, refetch } = useTokens({ page, limit });
 
-  const events = data?.data || [];
+  const tokens = data?.data || [];
   const totalCount = data?.meta.totalCount || 0;
-
-  const handleCreateUser = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   const paginationHandler = (action: "first" | "last" | "next" | "prev") => {
     const totalPages = Math.ceil(totalCount / limit);
@@ -54,11 +43,11 @@ const Events = () => {
   };
 
   if (isLoading) {
-    return <div>Loading events...</div>;
+    return <div>Loading tokens...</div>;
   }
 
   if (error) {
-    return <div>Error loading events: {error.message}
+    return <div>Error loading tokens: {error.message}
       <pre>{JSON.stringify(error, null, 2)}</pre>
       {/* retry text */}
       <Button onClick={() => refetch()} className="">Retry</Button>
@@ -67,13 +56,13 @@ const Events = () => {
 
   return (
     <div className="h-[92vh] p-4">
-      {events.length === 0 ? (
+      {tokens.length === 0 ? (
         <div className="flex h-screen flex-col items-center justify-center p-4">
-          <NoRecordsFound entity="Events" onCreate={handleCreateUser} />
+          <NoRecordsFound entity="Tokens" />
         </div>
       ) : (
         <Table
-          data={events}
+          data={tokens}
           metadata={{
             page,
             totalCount,
@@ -92,4 +81,4 @@ const Events = () => {
   );
 };
 
-export default Events;
+export default Tokens;

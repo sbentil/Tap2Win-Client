@@ -6,7 +6,7 @@ import Button from "@/components/core/button";
 import { IUser } from "@/interfaces/users";
 import Modal from "@/components/modal";
 import NoRecordsFound from "@/components/empty";
-import Table from "../../../../../components/tables/users";
+import Table from "../../../../../components/tables/admin/users";
 import UserForm from "@/components/forms/users";
 import useUsers from "@/hooks/useUsers";
 

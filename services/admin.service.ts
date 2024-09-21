@@ -67,7 +67,7 @@ class AdminService {
     }
 
     //Actions on Raffle
-    static fetchRaffles = async (filters: { page: number; limit: number; event?: string }) => {
+    static fetchTokens = async (filters: { page: number; limit: number; event?: string }) => {
         try {
             const queryParams = new URLSearchParams({
                 page: filters.page.toString(),
@@ -79,7 +79,7 @@ class AdminService {
             }
 
             const { data } = await Axios({
-                url: `/raffle/raffles?${queryParams.toString()}`,
+                url: `/raffle?${queryParams.toString()}`,
                 method: "GET",
             });
 
@@ -141,7 +141,7 @@ class AdminService {
             }
 
             const { data } = await Axios({
-                url: `/transaction/transactions?${queryParams.toString()}`,
+                url: `/transaction?${queryParams.toString()}`,
                 method: "GET",
             });
 
