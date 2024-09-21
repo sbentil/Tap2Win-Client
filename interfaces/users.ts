@@ -1,23 +1,21 @@
-export interface IUsers extends IUserInput {
-  createdat: string,
-  id: string,
-  updatedat: string,
+import { IPagination } from "."
+
+export interface IUser extends IUserInput {
+  createdAt: string,
+  _id: string,
+  updatedAt: string,
 }
 
 
 export interface IUserInput {
-  firstName: string,
-  lastName: string,
-  otherNames: string,
+  name: string,
   email: string
-  userRole: string,
-  status?: "active" | "inactive",
-  userType: string,
+  role: "admin" | "organizer"
+  status: "active" | "inactive",
+  phone: string
 }
 
-export interface IAuditReport {
-  date: string,
-  activity: string,
-  activity_by: string,
-  details: string,
+
+export interface IUserPagination extends IPagination {
+  role?: "admin" | "organizer"
 }

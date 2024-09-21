@@ -7,10 +7,6 @@ import Axios from "@/utils/Axios";
 import { IRoles } from "@/models/user.model";
 import { queryClient } from "@/app/provider";
 
-// TODO: After Implmenting Login Authentication, Test to see if queryClient is shared accross users
-//THIS FILE HAS A CLIENT SIDE VERSION AND A SERVER SIDE VERSION
-// Which means that there are two reactQueries, server side and client side
-
 export const roleToMap = new Map([
   ["admin", IRoles.ADMIN],
   ["organizer", IRoles.ORGANIZER],

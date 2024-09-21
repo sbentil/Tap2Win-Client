@@ -1,16 +1,10 @@
 import {
-    Backward,
-    CardTick1,
-    Document,
-    DocumentCopy,
-    EmptyWallet,
+    Firstline,
     Home,
     Icon,
-    MenuBoard,
     Moneys,
-    Profile2User,
+    Python,
     Setting2,
-    Stacks,
     User
 } from "iconsax-react";
 
@@ -42,7 +36,17 @@ export const getRoutes = (role: IRoles): INavItem[] => {
                 {
                     name: "Events",
                     path: "/events",
-                    Icon: Profile2User,
+                    Icon: Firstline,
+                },
+                {
+                    name: "Transactions",
+                    path: "/transactions",
+                    Icon: Moneys,
+                },
+                {
+                    name: "Tokens",
+                    path: "/tokens",
+                    Icon: Python,
                 },
 
                 {

@@ -1,10 +1,10 @@
-import React from 'react'
 import Button from '../core/button'
 import Image from 'next/image'
+import React from 'react'
 
 interface NoRecordsFoundProps {
     entity: string
-    onCreate: () => void
+    onCreate?: () => void
     buttonText?: string
     icon?: React.ReactNode
 }
@@ -26,11 +26,13 @@ const NoRecordsFound: React.FC<NoRecordsFoundProps> = ({
                 {`No ${entity} yet? let's create one!`}
             </p>
 
-            <div className="min-w-1/2 mx-auto">
-                <Button onClick={onCreate} variant='primary'>
-                    {buttonText}
-                </Button>
-            </div>
+            {
+                onCreate && <div className="min-w-1/2 mx-auto">
+                    <Button onClick={onCreate} variant='primary'>
+                        {buttonText}
+                    </Button>
+                </div>
+            }
         </div>
     )
 }
