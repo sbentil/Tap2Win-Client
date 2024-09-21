@@ -14,9 +14,6 @@ import { useAuthContext } from '@/hooks/userContext';
 const Navbar = () => {
     const { user } = useAuthContext();
     const [showNotifications, setShowNotifications] = useState(false);
-
-    console.log("user", user);
-
     return (
         <div className="w-full h-full flex justify-between items-center px-4">
             <Breadcrumb />
