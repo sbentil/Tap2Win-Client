@@ -29,7 +29,7 @@ const LoginPage = () => {
                 setLoading(false);
                 if (!error) {
                     login(user);
-                    window.location.href = "/"
+                    window.location.href = "/dashboard"
                     toasts.success("Login🎉", "Login Successful");
                 } else {
                     console.error(error)

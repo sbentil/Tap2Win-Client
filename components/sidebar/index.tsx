@@ -16,10 +16,10 @@ const NavItem: React.FC<INavItem> = ({ name, path, Icon }) => {
 
     useEffect(() => {
         // Check if the current pathname matches the nav item's path
-        if (path === "/") {
+        if (path === "/dashboard") {
             setActive(pathname === path); // Set active if the path is "/"
         } else {
-            setActive(pathname.startsWith(path)); // Set active for other paths
+            setActive(pathname.endsWith(path)); // Set active for other paths
         }
     }, [pathname, path]);
 
@@ -32,7 +32,7 @@ const NavItem: React.FC<INavItem> = ({ name, path, Icon }) => {
             )}
         >
             <Link
-                href={path}
+                href={`/dashboard${path}`}
                 className="flex items-center justify-start w-full h-full "
             >
                 {Icon && <Icon />}

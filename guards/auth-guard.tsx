@@ -29,12 +29,12 @@ const AuthGuard = ({
             } else if (userInfo) {
                 // If the user is fetched successfully, redirect them to home if they're on the sign-in page
                 if (pathname === "/signin") {
-                    router.push("/");
+                    router.push("/dashboard");
                 }
             }
         } else if (isPublic && isLoggedIn) {
             // If user is logged in and tries to access a public page like sign-in, redirect to home
-            router.push("/");
+            router.push("/dashboard");
         }
     }, [isLoggedIn, userInfo, error, pathname, router, isPublic]);
 
