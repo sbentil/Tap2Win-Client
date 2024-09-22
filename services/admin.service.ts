@@ -98,7 +98,7 @@ class AdminService {
 
 
     // Get All Events
-    static getEvents = async ({ page, limit, organizer }: { page: number; limit: number, organizer?:string }) => {
+    static getEvents = async ({ page, limit, organizer }: { page: number; limit: number, organizer?: string }) => {
         try {
             const queryParams = new URLSearchParams({
                 page: page.toString(),
@@ -122,14 +122,14 @@ class AdminService {
                 throw new Error(data.message);
             }
         } catch (e: any) {
-            const message = e?.response?.data?.error || e?.message || "Check console for error";
+            const message = e?.response?.data?.message || e?.message || "Unknown Error. Please contact @devteam";
             throw new Error(message);
         }
     };
 
 
     // Get All Transactions
-    static getTransactions = async ({ page, limit, event }: { page: number; limit: number, event?:string }) => {
+    static getTransactions = async ({ page, limit, event }: { page: number; limit: number, event?: string }) => {
         try {
             const queryParams = new URLSearchParams({
                 page: page.toString(),
@@ -153,7 +153,7 @@ class AdminService {
                 throw new Error(data.message);
             }
         } catch (e: any) {
-            const message = e?.response?.data?.error || e?.message || "Check console for error";
+            const message = e?.response?.data?.message || e?.message || "Unknown Error. Please contact @devteam";
             throw new Error(message);
         }
     };

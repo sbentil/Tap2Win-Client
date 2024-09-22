@@ -56,16 +56,15 @@ class OrganizerService {
 
 
     // Get All Transactions
-    static getTransactions = async ({ page, limit, event }: { page: number; limit: number, event: string }) => {
+    static getTransactions = async ({ page, limit, event }: { page: number; limit: number, event?: string }) => {
         try {
             const queryParams = new URLSearchParams({
                 page: page.toString(),
                 limit: limit.toString(),
-                event,
             });
 
             const { data } = await Axios({
-                url: `/transaction/transactions?${queryParams.toString()}`,
+                url: `/transaction/event/${event}?${queryParams.toString()}`,
                 method: "GET",
             });
 

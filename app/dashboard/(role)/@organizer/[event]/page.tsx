@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Tabs } from '@/components/core';
 import UseOrganizerTokens from '@/components/organizer/tokens';
+import UseTransactionsPage from '@/components/organizer/transactions/page';
 import { usePathname } from 'next/navigation';
 
 const tabs = [
@@ -23,7 +24,6 @@ const Page = () => {
 
     useEffect(() => {
         const event = pathname.split('/')[2]
-        console.log(event)
         setEvent(event)
     }, [pathname])
 
@@ -37,7 +37,7 @@ const Page = () => {
                 event && activeTab === "tokens" && <UseOrganizerTokens event={event} />
             }
             {
-                event && activeTab === "trans" && <p>Transactions</p>
+                event && activeTab === "trans" && <UseTransactionsPage event={event} />
             }
 
         </main>

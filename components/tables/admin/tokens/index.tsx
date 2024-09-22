@@ -4,11 +4,22 @@ import { Button } from "@/components/core";
 import { Columns } from "./columns";
 import EventSelector from "@/components/selectors/event";
 import { ExportCircle } from "iconsax-react";
+import { ExportDataModal } from "@/components/modals";
 import { IToken } from "@/interfaces/token";
 import { TableComponent } from "@/components/table";
 import ViewModal from "./view";
 import { useAuthContext } from "@/hooks/userContext";
 import { useState } from "react";
+
+const tokenFields = [
+  'name',
+  'phone',
+  'token',
+  'event',
+  '_id',
+  'createdAt',
+  'updatedAt'
+];
 
 interface Props {
   data: IToken[];
@@ -27,6 +38,7 @@ const Table: React.FC<Props> = ({
   data,
 }) => {
   const [viewItem, setViewItem] = useState<boolean>(false);
+  const [showexport, setExport] = useState<boolean>(false);
   const [selected, setSelected] = useState<IToken | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<string>("")
   const [metadata, setMetadata] = useState({
@@ -46,7 +58,7 @@ const Table: React.FC<Props> = ({
   const ActionFilters = () => (
     <div className="flex gap-x-4">
       <div className="flex items-center gap-4">
-        <Button variant="primary" className="gap-2" onClick={() => null}>
+        <Button variant="primary" className="gap-2" onClick={() => setExport(true)}>
           <ExportCircle />
           Export Tokens
         </Button>
@@ -103,6 +115,10 @@ const Table: React.FC<Props> = ({
       {viewItem && selected && (
         <ViewModal state={viewItem} onClose={setViewItem} data={selected} />
       )}
+
+      {
+        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} fields={tokenFields} />
+      }
 
     </>
   );

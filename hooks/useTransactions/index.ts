@@ -2,6 +2,8 @@ import { IToken, ITokensPagination } from '../../interfaces/token';
 
 import AdminService from '@/services/admin.service';
 import { ITransaction } from '@/interfaces/transaction';
+import OrganizerService from '@/services/organizer.service';
+import { useAuthContext } from '../userContext';
 import { useQuery } from '@tanstack/react-query';
 
 interface IGetUsersResponse {
@@ -16,9 +18,10 @@ interface IGetUsersResponse {
 
 
 const useTransactions = (filters: ITokensPagination) => {
+    const { user } = useAuthContext();
     const query = useQuery<IGetUsersResponse, Error>({
         queryKey: ['transactions', filters], // Query key includes the filters for refetching based on changes
-        queryFn: () => AdminService.getTransactions(filters), // Function to fetch users with the given filters
+        queryFn: () => user?.role === "admin" ? AdminService.getTransactions(filters) : OrganizerService.getTransactions(filters),
         staleTime: 5000,
         // keepPreviousData: true,
     });

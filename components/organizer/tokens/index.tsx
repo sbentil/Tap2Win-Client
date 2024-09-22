@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { Button } from "@/components/core";
 import NoRecordsFound from "@/components/empty";
 import Table from "../../tables/admin/tokens";
-import { useAuthContext } from "@/hooks/userContext";
 import useTokens from "@/hooks/useTokens";
 
 const UseOrganizerTokens = ({ event }: { event: string }) => {
@@ -54,9 +53,8 @@ const UseOrganizerTokens = ({ event }: { event: string }) => {
         </div>;
     }
 
-    console.log({ tokens });
     return (
-        <div className="h-[80vh] p-4 w-full">
+        <div className="min-h-[92vh] p-4 w-full">
             {tokens.length === 0 ? (
                 <div className="flex h-screen flex-col items-center justify-center p-4">
                     <NoRecordsFound entity="Tokens" />
