@@ -2,16 +2,15 @@ import Axios from "@/utils/Axios";
 
 class OrganizerService {
     //Actions on Raffle
-    static fetchRaffles = async (filters: { page: number; limit: number; event: string }) => {
+    static fetchRaffles = async (filters: { page: number; limit: number; event?: string }) => {
         try {
             const queryParams = new URLSearchParams({
                 page: filters.page.toString(),
                 limit: filters.limit.toString(),
-                event: filters.event,
             });
 
             const { data } = await Axios({
-                url: `/raffle/raffles?${queryParams.toString()}`,
+                url: `/raffle/event/${filters.event}?${queryParams.toString()}`,
                 method: "GET",
             });
 
@@ -57,7 +56,7 @@ class OrganizerService {
 
 
     // Get All Transactions
-    static getTransactions = async ({ page, limit, event }: { page: number; limit: number, event:string }) => {
+    static getTransactions = async ({ page, limit, event }: { page: number; limit: number, event: string }) => {
         try {
             const queryParams = new URLSearchParams({
                 page: page.toString(),

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 interface Tab {
@@ -48,6 +48,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, setActiveTab, type = 'butt
     const _handleClick = (tab: Tab | string, index: number) => {
         const tabValue = getValue(tab, index);
         setActiveTab && setActiveTab(tabValue);
+        console.log({ tabValue });
         setActive(tabValue);
     };
 

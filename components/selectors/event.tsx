@@ -7,13 +7,14 @@ import { useFormik } from 'formik';
 
 interface Props {
     setSelected: (s: string) => void
+    selected: string
 }
-const EventSelector: React.FC<Props> = ({ setSelected }) => {
+const EventSelector: React.FC<Props> = ({ setSelected, selected }) => {
     const { data, isLoading, error, refetch } = useEvents({ page: 1, limit: 20 });
     const events = data?.data || [];
     const { handleSubmit, ...form } = useFormik({
         initialValues: {
-            event: ""
+            event: selected
         },
         validationSchema: Yup.object({
             event: Yup.string().required(),

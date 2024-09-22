@@ -7,6 +7,7 @@ import { ExportCircle } from "iconsax-react";
 import { IToken } from "@/interfaces/token";
 import { TableComponent } from "@/components/table";
 import ViewModal from "./view";
+import { useAuthContext } from "@/hooks/userContext";
 import { useState } from "react";
 
 interface Props {
@@ -34,6 +35,9 @@ const Table: React.FC<Props> = ({
     isFetching: false,
   });
 
+
+  const { user } = useAuthContext()
+
   const onSelect = (item: any) => {
     setSelected(item);
     setViewItem(true);
@@ -47,7 +51,14 @@ const Table: React.FC<Props> = ({
           Export Tokens
         </Button>
       </div>
-      <EventSelector setSelected={setSelectedEvent} />
+      {
+        user?.role === "admin" && (
+          <EventSelector
+            selected={selectedEvent}
+            setSelected={setSelectedEvent}
+          />
+        )
+      }
     </div>
   )
 
