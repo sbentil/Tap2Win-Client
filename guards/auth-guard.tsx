@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import BouncingSquaresLoader from "@/components/preloader";
-import Cookies from "js-cookie";
 import { useAuthContext } from "@/hooks/userContext";
 import useUserSession from "@/hooks/useUserSession";
 
@@ -33,7 +32,7 @@ const AuthGuard = ({
             if (error) {
                 router.push("/signin");
             } else if (userInfo) {
-                Cookies.set("access_token", userToken!);
+                // Cookies.set("access_token", userToken!);
                 if (pathname === "/signin") {
                     router.push("/dashboard");
                 }
