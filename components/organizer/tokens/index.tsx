@@ -73,9 +73,6 @@ const UseOrganizerTokens = ({ event }: { event: string }) => {
                     onLast={() => paginationHandler("last")}
                 />
             )}
-            {
-
-            }
         </div>
     );
 };

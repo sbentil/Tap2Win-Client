@@ -1,6 +1,8 @@
 import { IEvent, IEventPagination } from './../../interfaces/event';
 
 import AdminService from '@/services/admin.service';
+import OrganizerService from '@/services/organizer.service';
+import { useAuthContext } from '../userContext';
 import { useQuery } from '@tanstack/react-query';
 
 interface IGetUsersResponse {
@@ -15,12 +17,12 @@ interface IGetUsersResponse {
 
 
 const useEvents = (filters: IEventPagination) => {
+    const { user } = useAuthContext();
     const query = useQuery<IGetUsersResponse, Error>({
         queryKey: ['events', filters], // Query key includes the filters for refetching based on changes
-        queryFn: () => AdminService.getEvents(filters), // Function to fetch users with the given filters
+        queryFn: () => user!.role === "admin" ? AdminService.getEvents(filters) : OrganizerService.getEvents(filters),
         staleTime: 5000, // Data will be considered fresh for 5 seconds
     });
-
     return {
         data: query.data,
         isLoading: query.isLoading,

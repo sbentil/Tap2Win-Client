@@ -1,6 +1,7 @@
 "use client";
 
 import { IRoles } from "@/models/user.model";
+import { removeCookie } from "typescript-cookie";
 import { useAuthContext } from "@/hooks/userContext";
 
 interface RoleProps {
@@ -15,6 +16,7 @@ const RoleGuard: React.FC<RoleProps> = ({
     const { user } = useAuthContext();
 
     if (!user) {
+        window.location.href = "/signin"
         return <p>No User</p>;
     }
 
@@ -25,6 +27,9 @@ const RoleGuard: React.FC<RoleProps> = ({
         case IRoles.ORGANIZER:
             return organizer;
         default:
+            removeCookie("access_token")
+            removeCookie("refresh_token")
+            window.location.href = "/signin"
             return <p>Role not recognized</p>;
     }
 }

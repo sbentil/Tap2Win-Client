@@ -24,7 +24,7 @@ const useTokens = (filters: ITokensPagination,) => {
         staleTime: 5000,
         // keepPreviousData: true,
     });
-
+    // console.log(">>",query.data  )
     return {
         data: query.data,
         isLoading: query.isLoading,
