@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Link as RouterLink } from 'lucide-react';
 import { formatDate } from '@/helpers/datetime';
+import { formatMoney } from '@/helpers/string';
 
 const EventCard = ({ event }: { event: IEvent }) => {
     // console.log({ event })
@@ -38,8 +39,8 @@ const EventCard = ({ event }: { event: IEvent }) => {
                 </div>
                 <div className="flex items-center text-sm">
                     <MoneyRecive className="mr-2 text-primary" />
-                    <strong className="text-primary">Accumulated Amount (GHS):</strong>
-                    <span className="ml-1 text-gray-700">{Number(event.tokensCount) * Number(event.price)}</span>
+                    <strong className="text-primary">Total Amount (GHS):</strong>
+                    <span className="ml-1 text-gray-700">{formatMoney(Number(event.tokensCount) * Number(event.price))}</span>
                 </div>
             </div>
 

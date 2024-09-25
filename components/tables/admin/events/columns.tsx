@@ -24,11 +24,11 @@ export const Columns: TbColumnObj[] = [
     options: { filter: true, sort: true },
     selector: (row: IEventInput) => formatDate(row.endDate),
   },
-  {
-    title: "Organizer",
-    options: { filter: true, sort: true },
-    selector: (row: { organizer: IUser }) => row.organizer?.name || "N/A",
-  },
+  // {
+  //   title: "Organizer",
+  //   options: { filter: true, sort: true },
+  //   selector: (row: { organizer: IUser }) => row.organizer?.name || "N/A",
+  // },
   // {
   //   title: "Organizer Phone",
   //   options: { filter: true, sort: true },

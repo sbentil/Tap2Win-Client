@@ -10,27 +10,29 @@ interface IGetUsersResponse {
     meta: {
         page: number;
         limit: number;
-        timestamp: string
+        timestamp: string;
         totalCount: number;
-    }
+    };
 }
-
 
 const useEvents = (filters: IEventPagination) => {
     const { user } = useAuthContext();
+
     const query = useQuery<IGetUsersResponse, Error>({
         queryKey: ['events', filters], // Query key includes the filters for refetching based on changes
         queryFn: () => user!.role === "admin" ? AdminService.getEvents(filters) : OrganizerService.getEvents(filters),
-        staleTime: 5000, // Data will be considered fresh for 5 seconds
+        staleTime: 0, // Ensures data is considered stale immediately
+        refetchOnWindowFocus: true, // Refetches when the window regains focus
+        refetchInterval: 10000, // Poll every 10 seconds (adjust this as needed)
     });
+
     return {
         data: query.data,
         isLoading: query.isLoading,
         error: query.error,
         status: query.status,
-        refetch: query.refetch
+        refetch: query.refetch,
     };
 };
 
-
-export default useEvents
+export default useEvents;

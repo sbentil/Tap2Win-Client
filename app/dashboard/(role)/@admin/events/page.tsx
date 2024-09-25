@@ -83,6 +83,7 @@ const Events = () => {
           onPrev={() => paginationHandler("prev")}
           onNext={() => paginationHandler("next")}
           onLast={() => paginationHandler("last")}
+          refetch={refetch}
         />
       )}
       {

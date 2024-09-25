@@ -1,4 +1,5 @@
 import Axios from "@/utils/Axios";
+import { IEventInput } from "@/interfaces/event";
 import { IServerCallback } from "./user.service";
 import { IUserInput } from "@/interfaces/users";
 
@@ -50,10 +51,40 @@ class AdminService {
             callback(message);
         }
     };
+    // create user
+    static createEvent = async (input: IEventInput, callback: IServerCallback) => {
+        try {
+            const { data } = await Axios.post("/event", input);
+            if (data.success) {
+                callback(null, data.data);
+            } else {
+                callback(data.message);
+            }
+        } catch (e: any) {
+            console.log(`CREATE "user" error`, e);
+            const message = e?.response?.data?.message || e?.message || "Check console for error";
+            callback(message);
+        }
+    };
 
     static updateUser = async (id: string, input: IUserInput, callback: IServerCallback) => {
         try {
             const { data } = await Axios.put(`/user/update/${id}`, input);
+            if (data.success) {
+                callback(null, data.data);
+            } else {
+                console.log("Update error....")
+                callback(data.message);
+            }
+        } catch (e: any) {
+            console.log(`UPDATE "user" error`, e);
+            const message = e?.response?.data?.message || e?.message || "Check console for error";
+            callback(message);
+        }
+    }
+    static updateEvent = async (id: string, input: IEventInput, callback: IServerCallback) => {
+        try {
+            const { data } = await Axios.put(`/event/${id}`, input);
             if (data.success) {
                 callback(null, data.data);
             } else {

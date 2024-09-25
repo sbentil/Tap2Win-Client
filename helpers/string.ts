@@ -25,3 +25,7 @@ export function getLastPathFromStr(_url: string) {
     const paths = _url?.split("/");
     return paths[paths?.length - 1];
 }
+
+export const formatMoney = (amount: number) => {
+    return amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};

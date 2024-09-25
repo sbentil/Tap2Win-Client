@@ -22,10 +22,12 @@ interface Props {
   onPrev: () => void;
   onFirst: () => void;
   onLast: () => void;
+  refetch: any
 }
 
 const Table: React.FC<Props> = ({
   data,
+  refetch
 }) => {
   const [viewItem, setViewItem] = useState<boolean>(false);
   const [editItem, setEditItem] = useState<boolean>(false);
@@ -117,7 +119,10 @@ const Table: React.FC<Props> = ({
         <CreateEventModal isOpen={editItem} onClose={() => setEditItem(false)} data={selected} />
       )}
       {
-        create && <CreateEventModal isOpen={create} onClose={() => setCreate(false)} />
+        create && <CreateEventModal isOpen={create} onClose={() => {
+          refetch()
+          setCreate(false)
+        }} />
       }
 
     </>
