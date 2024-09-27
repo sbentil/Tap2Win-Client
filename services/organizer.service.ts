@@ -1,4 +1,5 @@
 import Axios from "@/utils/Axios";
+import { IServerCallback } from "./user.service";
 
 class OrganizerService {
     //Actions on Raffle
@@ -80,6 +81,25 @@ class OrganizerService {
             throw new Error(message);
         }
     };
+
+
+    static fetchAndExportData = async (url: string, callback: IServerCallback) => {
+        try {
+            const { data } = await Axios({
+                url,
+                method: "GET",
+            });
+
+            if (data.success) {
+                callback(null, data)
+            } else {
+                callback(data.message);
+            }
+        } catch (e: any) {
+            const message = e?.response?.data?.error || e?.message || "Check console for error";
+            callback(message);
+        }
+    }
 }
 
 export default OrganizerService;

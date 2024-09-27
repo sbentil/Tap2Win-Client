@@ -117,7 +117,7 @@ const Table: React.FC<Props> = ({
         <ViewModal state={viewItem} onClose={setViewItem} data={selected} />
       )}
       {
-        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} fields={transactionFields} />
+        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} data={data[0]} type="transactions" />
       }
     </>
   );

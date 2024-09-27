@@ -117,7 +117,7 @@ const Table: React.FC<Props> = ({
       )}
 
       {
-        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} fields={tokenFields} />
+        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} data={data[0]} type="tokens" />
       }
 
     </>
