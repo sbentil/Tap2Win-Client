@@ -18,6 +18,16 @@ const config = {
       },
     },
     extend: {
+      boxShadow: {
+        'text-sm': '1px 1px 2px rgba(0, 0, 0, 0.5)',
+        'text-md': '2px 2px 4px rgba(0, 0, 0, 0.6)',
+        'text-lg': '3px 3px 6px rgba(0, 0, 0, 0.8)',
+      },
+      textShadow: {
+        'sm': '1px 1px 2px rgba(0, 0, 0, 0.5)',
+        'md': '2px 2px 4px rgba(0, 0, 0, 0.6)',
+        'lg': '3px 3px 6px rgba(0, 0, 0, 0.8)',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -60,10 +70,12 @@ const config = {
         sans: ["Inter", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
+        GeistMono: ["GeistMono", "monospace"],
+        BeVietnamPro: ["BeVietnamPro"],
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require('tailwindcss-textshadow'), require("tailwindcss-animate")],
 } satisfies Config
 
 export default config
