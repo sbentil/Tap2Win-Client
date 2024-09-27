@@ -26,17 +26,17 @@ export const Columns: TbColumnObj[] = [
   },
   {
     title: "Event Name",
-    options: { filter: true, sort: true },
+    options: { filter: false, sort: false },
     selector: (row: IToken) => row.event?.name || "N/A",
   },
   {
     title: "Created At",
     options: { filter: false, sort: true },
     selector: (row: IToken) => formatDate(row.createdAt),
-  },
-  {
-    title: "Updated At",
-    options: { filter: false, sort: true },
-    selector: (row: IToken) => formatDate(row.updatedAt),
-  },
+  }
+  // {
+  //   title: "Updated At",
+  //   options: { filter: false, sort: false },
+  //   selector: (row: IToken) => formatDate(row.updatedAt),
+  // },
 ];
