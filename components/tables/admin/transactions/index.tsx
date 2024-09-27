@@ -3,10 +3,25 @@
 import { Button } from "@/components/core";
 import { Columns } from "./columns";
 import EventSelector from "@/components/selectors/event";
+import { ExportCircle } from "iconsax-react";
+import { ExportDataModal } from "@/components/modals";
 import { ITransaction } from "@/interfaces/transaction";
 import { TableComponent } from "@/components/table";
 import ViewModal from "./view";
+import { useAuthContext } from "@/hooks/userContext";
 import { useState } from "react";
+
+const transactionFields = [
+  ['SessionId', 'OrderId', 'event'],
+  ['_id', 'createdAt', 'updatedAt'],
+  ['CustomerMobileNumber', 'CustomerEmail', 'CustomerName'],
+  ['Status', 'OrderDate', 'Currency'],
+  ['BranchName', 'IsRecurring', 'RecurringInvoiceId'],
+  ['Subtotal', 'PaymentType', 'AmountPaid'],
+  ['AmountAfterCharges', 'PaymentDate', 'PaymentDescription'],
+  ['IsSuccessful', 'Items', 'UnitPrice']
+];
+
 
 interface Props {
   data: ITransaction[];
@@ -24,8 +39,10 @@ interface Props {
 const Table: React.FC<Props> = ({
   data,
 }) => {
+  const { user } = useAuthContext()
   const [viewItem, setViewItem] = useState<boolean>(false);
   const [selected, setSelected] = useState<ITransaction | null>(null);
+  const [showexport, setExport] = useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] = useState<string>("")
   const [metadata, setMetadata] = useState({
     page: 1,
@@ -37,6 +54,25 @@ const Table: React.FC<Props> = ({
     setSelected(item);
     setViewItem(true);
   };
+
+  const ActionFilters = () => (
+    <div className="flex gap-x-4">
+      <div className="flex items-center gap-4">
+        <Button variant="primary" className="gap-2" onClick={() => setExport(true)}>
+          <ExportCircle />
+          Export Tokens
+        </Button>
+      </div>
+      {
+        user?.role === "admin" && (
+          <EventSelector
+            selected={selectedEvent}
+            setSelected={setSelectedEvent}
+          />
+        )
+      }
+    </div>
+  )
 
 
   const paginationHandler = (action: "first" | "last" | "next" | "prev") => {
@@ -71,7 +107,7 @@ const Table: React.FC<Props> = ({
         onRowClick={onSelect}
         tableContainerClasses={"h-full w-full"}
         metadata={metadata}
-        filterRender={<EventSelector setSelected={setSelectedEvent} />}
+        filterRender={<ActionFilters />}
         onFirst={() => paginationHandler("first")}
         onPrev={() => paginationHandler("prev")}
         onNext={() => paginationHandler("next")}
@@ -80,7 +116,9 @@ const Table: React.FC<Props> = ({
       {viewItem && selected && (
         <ViewModal state={viewItem} onClose={setViewItem} data={selected} />
       )}
-
+      {
+        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} data={data[0]} type="transactions" />
+      }
     </>
   );
 };

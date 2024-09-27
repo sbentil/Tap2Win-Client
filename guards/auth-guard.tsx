@@ -17,9 +17,14 @@ const AuthGuard = ({
     const { isLoggedIn } = useAuthContext();
     const router = useRouter();
     const pathname = usePathname();
-    
+
     // Use the custom hook to manage user session
     const { userToken, userInfo, isLoading, error } = useUserSession();
+
+
+    if (!isLoading && error) {
+        router.push("/signin")
+    }
 
     useEffect(() => {
         if (!isPublic) {
@@ -27,7 +32,7 @@ const AuthGuard = ({
             if (error) {
                 router.push("/signin");
             } else if (userInfo) {
-                // If the user is fetched successfully, redirect them to home if they're on the sign-in page
+                // Cookies.set("access_token", userToken!);
                 if (pathname === "/signin") {
                     router.push("/dashboard");
                 }
@@ -36,7 +41,7 @@ const AuthGuard = ({
             // If user is logged in and tries to access a public page like sign-in, redirect to home
             router.push("/dashboard");
         }
-    }, [isLoggedIn, userInfo, error, pathname, router, isPublic]);
+    }, [isLoggedIn, userInfo, error, pathname, router, isPublic, userToken]);
 
     // Show loader while checking token or fetching user info
     if (isLoading) {

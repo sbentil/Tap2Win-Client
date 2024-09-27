@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 interface Tab {

@@ -2,9 +2,11 @@ import * as Yup from 'yup';
 
 import { Button, Input, Select } from '@/components/core';
 import { IUser, IUserInput } from '@/interfaces/users';
+import React, { useState } from 'react'
 
-import React from 'react'
+import AdminService from '@/services/admin.service';
 import { cn } from '@/lib/utils';
+import toasts from '@/utils/toasts';
 import { useFormik } from 'formik';
 
 interface Props {
@@ -12,6 +14,7 @@ interface Props {
   onCancel: any
 }
 const UserForm: React.FC<Props> = ({ data, onCancel }) => {
+  const [loading, setLoading] = useState<boolean>(false)
   const [user, setUser] = React.useState<IUserInput>({
     name: data?.name ?? "",
     email: data?.email || "",
@@ -30,17 +33,30 @@ const UserForm: React.FC<Props> = ({ data, onCancel }) => {
       status: Yup.string().oneOf(["active", "inactive"]).required(),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // If not data, Create Event
+      setLoading(true)
+      if (!data) {
+        AdminService.createUser(values, (err, data) => {
+          setLoading(false)
+          if (!err) {
+            toasts.success("New User🎉", "Added Successfuly")
+          } else {
+            toasts.error("New User👺", err)
+          }
+        })
+      } else {
+        // If Data, Update event
+        AdminService.updateUser(data._id, values, (err, data) => {
+          setLoading(false)
+          if (!err) {
+            toasts.success("User🎉", "Updated Successfuly")
+          } else {
+            toasts.error("user Update👺", err)
+          }
+        })
+      }
     },
   });
-
-  /* use effect:
-  In implmentation, only the user id is passed to the form component.
-  The form component will use the id to fetch the user data from the server
-  and populate the form fields with the data.
-
-  if id is not provided, the form will be empty and the user can fill in the details
-  **/
 
   return (
     <form onSubmit={handleSubmit}>
@@ -120,7 +136,7 @@ const UserForm: React.FC<Props> = ({ data, onCancel }) => {
 
       <div className="flex gap-10 p-5 w-full item-center justify-center" >
         <Button onClick={onCancel} variant="outline" text="Cancel" type='button' />
-        <Button variant="primary" text={data ? "Save" : "Add User"} type="submit" className="min-w-[150px]" />
+        <Button variant="primary" text={loading ? "hangon..." : data ? "Save" : "Add User"} disabled={loading} type="submit" className="min-w-[150px]" />
       </div>
     </form>
   );

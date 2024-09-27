@@ -55,6 +55,10 @@ export const getRoutes = (role: IRoles): INavItem[] => {
                     Icon: Setting2,
                 },
             ];
+        case IRoles.ORGANIZER:
+            return [
+                ...defaults
+            ]
         // Add cases for other roles as needed
         default:
             return [...defaults]

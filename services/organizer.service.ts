@@ -1,17 +1,17 @@
 import Axios from "@/utils/Axios";
+import { IServerCallback } from "./user.service";
 
 class OrganizerService {
     //Actions on Raffle
-    static fetchRaffles = async (filters: { page: number; limit: number; event: string }) => {
+    static fetchRaffles = async (filters: { page: number; limit: number; event?: string }) => {
         try {
             const queryParams = new URLSearchParams({
                 page: filters.page.toString(),
                 limit: filters.limit.toString(),
-                event: filters.event,
             });
 
             const { data } = await Axios({
-                url: `/raffle/raffles?${queryParams.toString()}`,
+                url: `/raffle/event/${filters.event}?${queryParams.toString()}`,
                 method: "GET",
             });
 
@@ -57,16 +57,15 @@ class OrganizerService {
 
 
     // Get All Transactions
-    static getTransactions = async ({ page, limit, event }: { page: number; limit: number, event:string }) => {
+    static getTransactions = async ({ page, limit, event }: { page: number; limit: number, event?: string }) => {
         try {
             const queryParams = new URLSearchParams({
                 page: page.toString(),
                 limit: limit.toString(),
-                event,
             });
 
             const { data } = await Axios({
-                url: `/transaction/transactions?${queryParams.toString()}`,
+                url: `/transaction/event/${event}?${queryParams.toString()}`,
                 method: "GET",
             });
 
@@ -82,6 +81,25 @@ class OrganizerService {
             throw new Error(message);
         }
     };
+
+
+    static fetchAndExportData = async (url: string, callback: IServerCallback) => {
+        try {
+            const { data } = await Axios({
+                url,
+                method: "GET",
+            });
+
+            if (data.success) {
+                callback(null, data)
+            } else {
+                callback(data.message);
+            }
+        } catch (e: any) {
+            const message = e?.response?.data?.error || e?.message || "Check console for error";
+            callback(message);
+        }
+    }
 }
 
 export default OrganizerService;

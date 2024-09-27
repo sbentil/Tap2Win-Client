@@ -6,11 +6,14 @@ export interface IEventInput {
     description: string;
     startDate: Date;
     endDate: Date;
+    price: number
+    channel: string
+    organizer: string | IUser
 }
 
 export interface IEvent extends IEventInput {
+    tokensCount: number;
     organizer: IUser;
-    channel: string
     createdBy: IUser;
     lastUpdatedBy: IUser;
     _id: string;

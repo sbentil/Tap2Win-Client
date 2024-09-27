@@ -99,7 +99,8 @@ function Table<T>({
   const Pagination = () => (
     <div className="flex bg-white justify-between items-center py-4 px-2 mt-8">
       <p className="text-sm text-gray-500">
-        Showing page {page} of {totalPages} pages
+        Showing page <b className="text-primary">{page}</b> of {totalPages} pages. 
+        Total Records: <b className="text-primary">{totalCount}</b>
       </p>
       <div className="flex justify-center gap-x-2 items-center">
         <Button
@@ -146,7 +147,7 @@ function Table<T>({
     setVisibleData(filteredData);
   };
 
-  
+
 
 
   return (

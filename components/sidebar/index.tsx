@@ -16,8 +16,9 @@ const NavItem: React.FC<INavItem> = ({ name, path, Icon }) => {
 
     useEffect(() => {
         // Check if the current pathname matches the nav item's path
-        if (path === "/dashboard") {
-            setActive(pathname === path); // Set active if the path is "/"
+        // console.log({ path, pathname })
+        if (path === "/") {
+            setActive("/" === path); // Set active if the path is "/"
         } else {
             setActive(pathname.endsWith(path)); // Set active for other paths
         }
@@ -66,7 +67,7 @@ const Sidebar = () => {
             </div>
 
             {/* logout */}
-            <div className="absolute bottom-0 w-full px-8">
+            <div className="absolute bottom-20 w-full px-8">
                 <div onClick={logout} className=" cursor-pointer flex items-center justify-start w-full h-16 text-white hover:text-gray">
                     <LogoutCurve />
                     <span className="ml-4">Logout</span>
