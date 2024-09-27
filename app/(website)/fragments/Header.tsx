@@ -10,7 +10,7 @@ const HeaderFragment = (props: Props) => {
 
     return (
         <div className='absolute flex flex-col md:flex-row   md:p-16 justify-between items-center text-white  md:w-full h-[100px] rounded-3xl z-10'>
-            <div className="flex gap-2 mt-12 md:mx-0 mx-4 md:mt-0 bg-white rounded-md">
+            <div className="flex gap-2 mt-12 md:mx-0 mx-4 md:mt-0 bg-white rounded-xl">
                 <img
                     src="/assets/logo.png"
                     className="object-contain w-36 rounded"

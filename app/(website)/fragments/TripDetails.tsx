@@ -28,7 +28,7 @@ const TripDetails: React.FC<Props> = ({ btnText, caption, places }) => {
                     </svg>
                 </span>
                 <div className=''>
-                    <h1 className='text-lg text-primary font-medium font-CabinetGrotesk'>{caption}</h1>
+                    <h1 className='text-sm md:text-lg text-primary font-medium font-CabinetGrotesk'>{caption}</h1>
                     <ul className='flex gap-1'>
                         {places.map((place, index) => (
                             <li key={index} className='text-xs text-[#777] font-BeVietnamPro'>
@@ -53,8 +53,9 @@ const TripDetails: React.FC<Props> = ({ btnText, caption, places }) => {
 
 const TripDetailsPage = () => {
     const btnText = 'Register Now';
-    const caption = 'D9104 Car Raffle';
-    const places = [{ place: 'Rottary' }, { place: 'D9104' }, { place: 'Car' }, { place: 'Raffle' }];
+    const caption = 'Rotary D9104 Car Raffle';
+    const places = [{ place: 'Simply' }, { place: 'Dial' }, { place: '*713*2206#' }];
+    // const places = [{ place: 'Rottary' }, { place: 'D9104' }, { place: 'Car' }, { place: 'Raffle' }];
 
     return <TripDetails btnText={btnText} caption={caption} places={places} />;
 };
