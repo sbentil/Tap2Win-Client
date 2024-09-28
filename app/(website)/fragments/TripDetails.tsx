@@ -1,7 +1,6 @@
 import React from 'react';
 
 type Props = {
-    
     btnText: string;
     caption: string;
     places: {
