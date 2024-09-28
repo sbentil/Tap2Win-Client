@@ -10,7 +10,9 @@ type Props = {
 
 
 const TripDetails: React.FC<Props> = ({ btnText, caption, places }) => {
-
+    const openUSSD = () => {
+        window.open('tel:*713*2206#', '_blank');
+    };
     return (
         <div className='bg-white w-[95%] mx-2 md:mx-0 md:w-full h-[65px] bg-transparent rounded-full flex justify-between items-center p-2'>
             <div className='w-1/2 h-full flex gap-2 items-center justify-start'>
@@ -42,6 +44,7 @@ const TripDetails: React.FC<Props> = ({ btnText, caption, places }) => {
             <span className='border-r w-1 h-2'></span>
             <div className='w-auto'>
                 <button
+                    onClick={openUSSD}
                     className='w-32 text-sm font-BeVietnamPro h-[55px] bg-primary hover:bg-opacity-50 hover:cursor-pointer text-white rounded-full'
                 >
                     {btnText}
