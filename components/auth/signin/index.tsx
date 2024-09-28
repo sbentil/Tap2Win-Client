@@ -42,7 +42,7 @@ const LoginPage = () => {
     return (
         <div className="mx-auto w-full max-w-sm lg:w-96">
             <div className="text-left">
-                <h2 className="text-xl font-extrabold text-text">Login.</h2>
+                <Link href={"/"} className="text-xl font-extrabold text-text">Login.</Link>
                 <p className="mt-2 text-sm text-text">
                     Enter your account details below.
                 </p>
@@ -78,8 +78,8 @@ const LoginPage = () => {
                             />
                         </div>
                         <div className="flex flex-col text-left text-sm text-gray-600 space-y-2">
-                            <Link href="/forgot-password" className="text-secondary hover:text-primary">
-                                Forgot your password?
+                            <Link href="/" className="text-secondary hover:text-primary">
+                                Go to Webiste
                             </Link>
                         </div>
                         <div>
