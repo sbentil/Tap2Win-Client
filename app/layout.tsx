@@ -11,8 +11,8 @@ import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
-  title: "DCM Payment Gateway Dashboard",
-  description: "Payment Gateway Dashboard",
+  title: "ROTARY D9104 CAR RAFFLE",
+  description: " A raffle to fundraise to  support the construction of 300 Solar Vaccine Shelters in deprived communities across Ghana",
 };
 
 export default function RootLayout({
