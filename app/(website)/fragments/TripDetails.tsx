@@ -54,12 +54,12 @@ const TripDetails: React.FC<Props> = ({ btnText, caption, places, action }) => {
             </div>
             {/* Action Links for "My Tokens" and "Verify Token" */}
             <div className='flex gap-4 font-semibold rounded-full w-max py-2 px-4 absolute bottom-0'>
-                <Link href="/my-tokens" passHref>
+                <Link href="/tokens?my-tokens=1" passHref>
                     <p className='text-sm font-BeVietnamPro text-primary underline'>
                         My Tokens
                     </p>
                 </Link>
-                <Link href="/verify-token" passHref>
+                <Link href="/tokens?verify=1" passHref>
                     <p className='text-sm font-BeVietnamPro text-primary underline'>
                         Verify Token
                     </p>

@@ -1,3 +1,4 @@
+import { formatPhoneNumber } from './../helpers/string';
 import Axios from "@/utils/Axios";
 import { IServerCallback } from "./user.service";
 
@@ -37,6 +38,52 @@ class GeneralService {
 
         } catch (e: any) {
             console.log(`FETCH "payments/checkout" error`, e);
+            const message =
+                e?.response?.data?.error || e?.message || "Check console for error";
+            callback(message)
+
+        }
+    }
+
+    static async myTokens(phone: string, callback: IServerCallback) {
+        try {
+            const formatted = formatPhoneNumber(phone);
+            const { data } = await Axios({
+                method: "GET",
+                url: `public/my-tokens/${formatted}`
+            })
+
+            if (data.success) {
+                callback(null, data.data);
+            } else {
+                callback(data.message);
+            }
+
+        } catch (e: any) {
+            console.log(`FETCH "user/tokens" error`, e);
+            const message =
+                e?.response?.data?.error || e?.message || "Check console for error";
+            callback(message)
+
+        }
+    }
+
+    static async verifyToken(phone: string, token: string, callback: IServerCallback) {
+        try {
+            const { data } = await Axios({
+                method: "POST",
+                url: `public/verify-token`,
+                data: { phone, token }
+            })
+
+            if (data.success) {
+                callback(null, data.data);
+            } else {
+                callback(data.message);
+            }
+
+        } catch (e: any) {
+            console.log(`FETCH "user/verify-token" error`, e);
             const message =
                 e?.response?.data?.error || e?.message || "Check console for error";
             callback(message)
