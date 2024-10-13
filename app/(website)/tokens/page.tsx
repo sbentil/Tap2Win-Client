@@ -7,6 +7,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import MyToken from './_components/my-tokens';
 import VerifyToken from './_components/verify';
+import ImageCarousel from '../fragments/ImageCarousel';
 
 const Tokens = () => {
     const searchParams = useSearchParams();
@@ -43,9 +44,9 @@ const Tokens = () => {
                 <meta name="description" content="ROTARY D9104 CAR RAFFLE" />
                 <link rel="icon" href="/assets/logo.png" />
             </Head>
-
+            <ImageCarousel />
             {/* Navbar */}
-            <div className="flex items-center justify-between px-4 shadow-md">
+            <div className="bg-gray-light flex items-center justify-between px-4 shadow-md z-50">
                 <Link href={"/"} className="flex">
                     <img
                         src="/assets/logo.png"
@@ -57,8 +58,7 @@ const Tokens = () => {
                     <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
                 </div>
             </div>
-
-            <div className="tab-content min-h-screen">
+            <div className="tab-content min-h-screen z-50">
                 {activeTab === 'my-token' && <MyToken />}
                 {activeTab === 'verify' && <VerifyToken />}
             </div>

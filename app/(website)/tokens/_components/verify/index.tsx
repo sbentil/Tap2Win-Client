@@ -5,6 +5,7 @@ import GeneralService from '@/services';
 import { formatDate } from '@/helpers/datetime';
 import { IToken } from '@/interfaces/token';
 import { Verify } from 'iconsax-react';
+import toasts from '@/utils/toasts';
 
 const VerifyToken = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -27,9 +28,11 @@ const VerifyToken = () => {
         GeneralService.verifyToken(phoneNumber, token, (err, data) => {
             setLoading(false);
             if (err) {
-                setError(err);
+                return toasts.error('Verify-Token', err, {
+                    toastId: 'verify-tokens',
+                    position: 'bottom-center'
+                });
             } else {
-                console.log(data);
                 setTokenDetails(data);
             }
         });
@@ -69,7 +72,7 @@ const VerifyToken = () => {
                     <span>Verify</span>
                 </Button>
 
-                {error && <p className="text-red-500 my-4">{error}</p>}
+                {/* {error && <p className="text-red-500 my-4">{error}</p>} */}
 
                 {tokenDetails && (
                     <div className="w-full space-y-4 text-gray mt-6">

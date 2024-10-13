@@ -54,7 +54,11 @@ class GeneralService {
             })
 
             if (data.success) {
-                callback(null, data.data);
+                if (data.data.length <= 0) {
+                    callback("No tokens found")
+                } else {
+                    callback(null, data.data);
+                }
             } else {
                 callback(data.message);
             }

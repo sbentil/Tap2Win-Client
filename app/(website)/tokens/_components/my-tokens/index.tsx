@@ -5,6 +5,7 @@ import GeneralService from '@/services';
 import { formatPhoneNumber } from '@/helpers/string';
 import { formatDate } from '@/helpers/datetime';
 import { IToken } from '@/interfaces/token';
+import toasts from '@/utils/toasts';
 
 const MyToken = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -26,9 +27,11 @@ const MyToken = () => {
         GeneralService.myTokens(phoneNumber, (err, data) => {
             setLoading(false);
             if (err) {
-                setError(err);
+                return toasts.error('My-Tokens', err, {
+                    toastId: 'my-tokens',
+                    position: 'bottom-center'
+                });
             } else {
-                console.log(data);
                 setTokenDetails(data);
             }
         });
@@ -55,7 +58,7 @@ const MyToken = () => {
                         <span>Lookup</span>
                     </Button>
                 </div>
-                {error && <p className="text-red-500 my-4">{error}</p>}
+                {/* {error && <p className="text-red-500 my-4">{error}</p>} */}
                 {tokenDetails.length > 0 && (
                     <div className="w-full space-y-4 text-gray">
                         <h3 className="font-semibold text-xl">Your Token Details - ({tokenDetails.length}):</h3>
