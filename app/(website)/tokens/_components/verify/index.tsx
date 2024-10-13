@@ -69,7 +69,7 @@ const VerifyToken = () => {
                     <span>Verify</span>
                 </Button>
 
-                {error && <p className="text-red-500">{error}</p>}
+                {error && <p className="text-red-500 my-4">{error}</p>}
 
                 {tokenDetails && (
                     <div className="w-full space-y-4 text-gray mt-6">
@@ -78,7 +78,8 @@ const VerifyToken = () => {
                             <p className="text-primary font-semibold">Token: {tokenDetails.token}</p>
                             <p className="text-gray">Name: {tokenDetails.name}</p>
                             <p className="text-gray">Phone: {tokenDetails.phone}</p>
-                            <p className="text-gray">Purchased on: {formatDate(tokenDetails.createdAt)}</p>
+                            <p className="text-gray">Via: {tokenDetails.transaction?.channel || "USSD"}</p>
+                            <p className="text-gray">Purchased on: {formatDate(tokenDetails.createdAt, true)}</p>
                             <Verify className='text-primary my-2' />
                         </div>
                     </div>

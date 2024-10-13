@@ -55,16 +55,23 @@ const MyToken = () => {
                         <span>Lookup</span>
                     </Button>
                 </div>
-                {error && <p className="text-red-500">{error}</p>}
+                {error && <p className="text-red-500 my-4">{error}</p>}
                 {tokenDetails.length > 0 && (
                     <div className="w-full space-y-4 text-gray">
                         <h3 className="font-semibold text-xl">Your Token Details - ({tokenDetails.length}):</h3>
                         {/* Added max-height and overflow-y-auto for scrolling */}
                         <div className="grid gap-4 max-h-96 overflow-y-auto pb-6">
-                            {tokenDetails.map((tokenDetail) => (
+                            {tokenDetails.map((tokenDetail, index) => (
                                 <div key={tokenDetail._id} className="p-4 bg-white cursor-pointer hover:shadow-sm rounded-lg border border-gray">
+                                    <div className='flex items-center justify-between'>
+                                        <p className='text-sm text-gray font-bold'>{index + 1}</p>
+                                        <p className='text-sm text-gray'>{tokenDetail._id}</p>
+                                    </div>
                                     <h4 className="text-primary font-semibold">Token: {tokenDetail.token}</h4>
-                                    <p className="text-gray">Purchased on: {formatDate(tokenDetail.createdAt)}</p>
+                                    <div>
+                                        <p className="text-gray">Purchased on: {formatDate(tokenDetail.createdAt, true)}</p>
+                                        <p className="text-gray">Via: {tokenDetail.transaction?.channel ?? "USSD"}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
