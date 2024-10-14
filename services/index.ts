@@ -1,6 +1,6 @@
-import { formatPhoneNumber } from './../helpers/string';
 import Axios from "@/utils/Axios";
 import { IServerCallback } from "./user.service";
+import { formatPhoneNumber } from './../helpers/string';
 
 interface IPurchaseInput {
     tokens_count: number;
@@ -91,6 +91,27 @@ class GeneralService {
             const message =
                 e?.response?.data?.error || e?.message || "Check console for error";
             callback(message)
+
+        }
+    }
+
+
+    static async verifyPayment(input: { ref: string }) {
+        try {
+            const { data } = await Axios({
+                method: "POST",
+                url: "payments/verify-payment",
+                data: input
+            })
+
+            console.log(data)
+           return data
+
+        } catch (e: any) {
+            console.log(`FETCH "payments/verify-payment" error`, e);
+            const message =
+                e?.response?.data?.error || e?.message || "Check console for error";
+            return message
 
         }
     }

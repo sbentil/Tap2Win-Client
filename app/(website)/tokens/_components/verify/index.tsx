@@ -76,7 +76,7 @@ const VerifyToken = () => {
 
                 {tokenDetails && (
                     <div className="w-full space-y-4 text-gray mt-6">
-                        <h3 className="font-semibold text-xl">Token Validity Details:</h3>
+                        <h3 className="text-black font-semibold text-xl">Token Validity Details:</h3>
                         <div className="p-4 bg-white cursor-pointer hover:shadow-sm rounded-lg border border-gray hover:border-primary">
                             <p className="text-primary font-semibold">Token: {tokenDetails.token}</p>
                             <p className="text-gray">Name: {tokenDetails.name}</p>
