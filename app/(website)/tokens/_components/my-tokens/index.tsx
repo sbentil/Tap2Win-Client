@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/core';
+
 import { ArrowUp } from 'lucide-react';
+import { Button } from '@/components/core';
 import GeneralService from '@/services';
-import { formatPhoneNumber } from '@/helpers/string';
-import { formatDate } from '@/helpers/datetime';
 import { IToken } from '@/interfaces/token';
+import { formatDate } from '@/helpers/datetime';
+import { formatPhoneNumber } from '@/helpers/string';
+import toasts from '@/utils/toasts';
 
 const MyToken = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -26,9 +28,11 @@ const MyToken = () => {
         GeneralService.myTokens(phoneNumber, (err, data) => {
             setLoading(false);
             if (err) {
-                setError(err);
+                return toasts.error('My-TIckets', err, {
+                    toastId: 'my-tokens',
+                    position: 'bottom-center'
+                });
             } else {
-                console.log(data);
                 setTokenDetails(data);
             }
         });
@@ -55,16 +59,23 @@ const MyToken = () => {
                         <span>Lookup</span>
                     </Button>
                 </div>
-                {error && <p className="text-red-500">{error}</p>}
+                {/* {error && <p className="text-red-500 my-4">{error}</p>} */}
                 {tokenDetails.length > 0 && (
-                    <div className="w-full space-y-4 text-gray">
-                        <h3 className="font-semibold text-xl">Your Token Details - ({tokenDetails.length}):</h3>
+                    <div className="w-full space-y-4 text-gray bg-gray-light">
+                        <h3 className="font-semibold text-xl">Your Ticket Details - ({tokenDetails.length}):</h3>
                         {/* Added max-height and overflow-y-auto for scrolling */}
                         <div className="grid gap-4 max-h-96 overflow-y-auto pb-6">
-                            {tokenDetails.map((tokenDetail) => (
+                            {tokenDetails.map((tokenDetail, index) => (
                                 <div key={tokenDetail._id} className="p-4 bg-white cursor-pointer hover:shadow-sm rounded-lg border border-gray">
-                                    <h4 className="text-primary font-semibold">Token: {tokenDetail.token}</h4>
-                                    <p className="text-gray">Purchased on: {formatDate(tokenDetail.createdAt)}</p>
+                                    <div className='flex items-center justify-between'>
+                                        <p className='text-sm text-gray font-bold'>{index + 1}</p>
+                                        <p className='text-sm text-gray'>{tokenDetail._id}</p>
+                                    </div>
+                                    <h4 className="text-primary font-semibold">Ticket: {tokenDetail.token}</h4>
+                                    <div>
+                                        <p className="text-gray">Purchased on: {formatDate(tokenDetail.createdAt, true)}</p>
+                                        <p className="text-gray">Via: {tokenDetail.transaction?.channel ?? "USSD"}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>

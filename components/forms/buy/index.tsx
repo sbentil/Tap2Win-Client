@@ -17,6 +17,7 @@ const TokenPurchaseForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         initialValues: {
             name: '',
             phone: '',
+            email: '',
             tokens_count: 1,
         },
         validationSchema: Yup.object({
@@ -27,6 +28,7 @@ const TokenPurchaseForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             tokens_count: Yup.number()
                 .min(1, 'At least 1 token must be purchased')
                 .required('Number of tokens is required'),
+            email: Yup.string().email('Invalid email address'),
         }),
         onSubmit: async (values) => {
             setLoading(true);
@@ -84,10 +86,16 @@ const TokenPurchaseForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                         {...form}
                     />
                     <TextInput
+                        id="email"
+                        type="email"
+                        label="Email (Optional for Ticket Receipt)"
+                        {...form}
+                    />
+                    <TextInput
                         id="tokens_count"
                         type="number"
                         required
-                        label="Number of Tokens"
+                        label="Number of Tokens (GHC 10 each)"
                         {...form}
                         handleChange={handleTokenChange}
                         min={1}

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/core';
+
 import { ArrowUp } from 'lucide-react';
+import { Button } from '@/components/core';
 import GeneralService from '@/services';
-import { formatDate } from '@/helpers/datetime';
 import { IToken } from '@/interfaces/token';
 import { Verify } from 'iconsax-react';
+import { formatDate } from '@/helpers/datetime';
+import toasts from '@/utils/toasts';
 
 const VerifyToken = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -27,9 +29,11 @@ const VerifyToken = () => {
         GeneralService.verifyToken(phoneNumber, token, (err, data) => {
             setLoading(false);
             if (err) {
-                setError(err);
+                return toasts.error('Verify-Tikcets', err, {
+                    toastId: 'verify-tokens',
+                    position: 'bottom-center'
+                });
             } else {
-                console.log(data);
                 setTokenDetails(data);
             }
         });
@@ -69,16 +73,17 @@ const VerifyToken = () => {
                     <span>Verify</span>
                 </Button>
 
-                {error && <p className="text-red-500">{error}</p>}
+                {/* {error && <p className="text-red-500 my-4">{error}</p>} */}
 
                 {tokenDetails && (
                     <div className="w-full space-y-4 text-gray mt-6">
-                        <h3 className="font-semibold text-xl">Token Validity Details:</h3>
+                        <h3 className="text-black font-semibold text-xl">Tickets Validity Details:</h3>
                         <div className="p-4 bg-white cursor-pointer hover:shadow-sm rounded-lg border border-gray hover:border-primary">
-                            <p className="text-primary font-semibold">Token: {tokenDetails.token}</p>
+                            <p className="text-primary font-semibold">Tickets: {tokenDetails.token}</p>
                             <p className="text-gray">Name: {tokenDetails.name}</p>
                             <p className="text-gray">Phone: {tokenDetails.phone}</p>
-                            <p className="text-gray">Purchased on: {formatDate(tokenDetails.createdAt)}</p>
+                            <p className="text-gray">Via: {tokenDetails.transaction?.channel || "USSD"}</p>
+                            <p className="text-gray">Purchased on: {formatDate(tokenDetails.createdAt, true)}</p>
                             <Verify className='text-primary my-2' />
                         </div>
                     </div>
