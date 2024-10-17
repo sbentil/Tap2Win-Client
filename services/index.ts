@@ -115,6 +115,25 @@ class GeneralService {
 
         }
     }
+    static async verifyPseudoPayment(input: { ref: string }) {
+        try {
+            const { data } = await Axios({
+                method: "POST",
+                url: "payments/pseudo-verify-payment",
+                data: input
+            })
+
+            console.log(data)
+           return data
+
+        } catch (e: any) {
+            console.log(`FETCH "payments/pseudo-verify-payment" error`, e);
+            const message =
+                e?.response?.data?.error || e?.message || "Check console for error";
+            return message
+
+        }
+    }
 }
 
 export default GeneralService;
