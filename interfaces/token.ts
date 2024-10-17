@@ -6,6 +6,11 @@ export interface IToken {
     phone: string;
     token: string;
     event: IEvent
+    transaction: {
+        _id: string,
+        channel: string,
+        StatusCheckData: any
+    }
     _id: string;
     createdAt: string;
     updatedAt: string;

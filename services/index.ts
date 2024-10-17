@@ -1,6 +1,6 @@
-import { formatPhoneNumber } from './../helpers/string';
 import Axios from "@/utils/Axios";
 import { IServerCallback } from "./user.service";
+import { formatPhoneNumber } from './../helpers/string';
 
 interface IPurchaseInput {
     tokens_count: number;
@@ -54,7 +54,11 @@ class GeneralService {
             })
 
             if (data.success) {
-                callback(null, data.data);
+                if (data.data.length <= 0) {
+                    callback("No tokens found")
+                } else {
+                    callback(null, data.data);
+                }
             } else {
                 callback(data.message);
             }
@@ -87,6 +91,46 @@ class GeneralService {
             const message =
                 e?.response?.data?.error || e?.message || "Check console for error";
             callback(message)
+
+        }
+    }
+
+
+    static async verifyPayment(input: { ref: string }) {
+        try {
+            const { data } = await Axios({
+                method: "POST",
+                url: "payments/verify-payment",
+                data: input
+            })
+
+            console.log(data)
+           return data
+
+        } catch (e: any) {
+            console.log(`FETCH "payments/verify-payment" error`, e);
+            const message =
+                e?.response?.data?.error || e?.message || "Check console for error";
+            return message
+
+        }
+    }
+    static async verifyPseudoPayment(input: { ref: string }) {
+        try {
+            const { data } = await Axios({
+                method: "POST",
+                url: "payments/pseudo-verify-payment",
+                data: input
+            })
+
+            console.log(data)
+           return data
+
+        } catch (e: any) {
+            console.log(`FETCH "payments/pseudo-verify-payment" error`, e);
+            const message =
+                e?.response?.data?.error || e?.message || "Check console for error";
+            return message
 
         }
     }
