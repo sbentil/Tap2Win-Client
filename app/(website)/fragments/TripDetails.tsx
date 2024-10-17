@@ -71,9 +71,9 @@ const TripDetails: React.FC<Props> = ({ btnText, caption, places, action }) => {
 
 
 const TripDetailsPage: React.FC<{ onBuyClose: () => void }> = ({ onBuyClose }) => {
-    const btnText = 'Register Now';
+    const btnText = 'Buy Ticket';
     const caption = 'Rotary D9104 Car Raffle';
-    const places = [{ place: 'Simply' }, { place: 'Dial' }, { place: '*713*2206#' }];
+    const places = [{ place: 'For USSD' }, { place: 'Dial' }, { place: '*713*2206#' }];
     // const places = [{ place: 'Rottary' }, { place: 'D9104' }, { place: 'Car' }, { place: 'Raffle' }];
 
     return <TripDetails action={onBuyClose} btnText={btnText} caption={caption} places={places} />;
