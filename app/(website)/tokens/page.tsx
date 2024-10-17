@@ -1,13 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"; // Ensure this is a client component
 
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { Tabs } from '@/components/core';
+import { useRouter, useSearchParams } from 'next/navigation';
+
 import Head from 'next/head';
+import ImageCarousel from '../fragments/ImageCarousel';
 import Link from 'next/link';
 import MyToken from './_components/my-tokens';
+import { Tabs } from '@/components/core';
 import VerifyToken from './_components/verify';
-import ImageCarousel from '../fragments/ImageCarousel';
 
 const Tokens = () => {
     const searchParams = useSearchParams();
@@ -22,8 +24,8 @@ const Tokens = () => {
 
     // Tabs configuration
     const tabs = [
-        { value: 'my-token', label: 'My Token(s)' },
-        { value: 'verify', label: 'Verify Token' },
+        { value: 'my-token', label: 'My Tickets(s)' },
+        { value: 'verify', label: 'Verify Tickets' },
     ];
 
     // Effect to update URL when active tab changes

@@ -1,9 +1,4 @@
-import { IToken, ITokensPagination } from '../../interfaces/token';
-
-import AdminService from '@/services/admin.service';
 import GeneralService from '@/services';
-import OrganizerService from '@/services/organizer.service';
-import { useAuthContext } from '../userContext';
 import { useQuery } from '@tanstack/react-query';
 
 interface IPaymentConfimation {
