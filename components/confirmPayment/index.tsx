@@ -13,7 +13,7 @@ const PaymentConfirmation: React.FC<IPaymentData> = ({ reference, ...rest }) => 
         <div className="flex flex-grow justify-center items-center">
             <div className="w-full md:w-96 px-4 py-8 md:px-10 bg-gray-light shadow-lg rounded-md md:mx-20 mx-auto md:absolute md:bottom-6 md:left-0 fixed inset-x-0 bottom-0 flex flex-col justify-center items-center md:items-start">
                 {/* Close Button (Visible only on desktop) */}
-                <p onClick={() => null} className="cursor-pointer absolute top-2 right-2 text-white bg-primary w-8 h-8 rounded-full flex items-center justify-center hover:text-gray">
+                <p onClick={() => window.location.href = "/"} className="cursor-pointer absolute top-2 right-2 text-white bg-primary w-8 h-8 rounded-full flex items-center justify-center hover:text-gray">
                     &#10005;
                 </p>
                 <h2 className="text-2xl font-bold text-center text-primary mb-4">
