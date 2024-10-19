@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button } from "@/components/core";
 import NoRecordsFound from "@/components/empty";
@@ -29,17 +29,24 @@ const UseOrganizerTokens = ({ event }: { event: string }) => {
                 setPage(totalPages);
                 break;
             case "next":
+                console.log("next from page", page);
                 if (page < totalPages) {
                     setPage(page + 1);
                 }
                 break;
             case "prev":
+                console.log("prev from page", page);
                 if (page > 1) {
                     setPage(page - 1);
                 }
                 break;
         }
     };
+
+
+    useEffect(() => {
+        refetch();
+    }, [page, refetch]);
 
     if (isLoading) {
         return <div>Loading tokens...</div>;
@@ -66,6 +73,7 @@ const UseOrganizerTokens = ({ event }: { event: string }) => {
                         page,
                         totalCount,
                         isFetching: isLoading,
+                        pageSize: limit,
                     }}
                     onFirst={() => paginationHandler("first")}
                     onPrev={() => paginationHandler("prev")}
