@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 import { CloseCircle, Verify } from 'iconsax-react';
-import GeneralService, { ICheckoutResponse } from '@/services';
 
 import { IPaymentData } from '@/app/(website)/page';
 import usePaymentVerification from '@/hooks/usePaymentConfimation';
@@ -17,7 +16,7 @@ const PaymentConfirmation: React.FC<IPaymentData> = ({ reference, ...rest }) => 
                     &#10005;
                 </p>
                 <h2 className="text-2xl font-bold text-center text-primary mb-4">
-                    Token Payment Status
+                    Ticket Payment Status
                 </h2>
                 {
                     isLoading && <p className="text-center text-primary">Loading...</p>
