@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 export default function TableExample() {
     const [metadata, setMetadata] = useState({
-        page: 1, totalCount: 50, isFetching: false
+        page: 1, totalCount: 50, isFetching: false, pageSize: 10
     })
     const onSelect = (item: any) => {
         console.log(item);
