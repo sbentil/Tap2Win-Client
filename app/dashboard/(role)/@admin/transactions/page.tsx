@@ -67,6 +67,7 @@ const Page = () => {
             page,
             totalCount,
             isFetching: isLoading,
+            pageSize: limit
           }}
           onFirst={() => paginationHandler("first")}
           onPrev={() => paginationHandler("prev")}

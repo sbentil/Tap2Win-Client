@@ -29,6 +29,7 @@ interface Props {
     page: number;
     totalCount: number;
     isFetching: boolean;
+    pageSize: number;
   };
   onNext: () => void;
   onPrev: () => void;
@@ -48,6 +49,7 @@ const Table: React.FC<Props> = ({
     page: 1,
     totalCount: data.length,
     isFetching: false,
+    pageSize: 10
   });
 
   const onSelect = (item: any) => {
