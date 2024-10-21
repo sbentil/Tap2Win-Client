@@ -30,6 +30,7 @@ interface TableProps<T> {
     page: number;
     totalCount: number;
     isFetching: boolean;
+    pageSize: number;
   };
   tableContainerClasses?: string;
   tableClasses?: string;
@@ -63,7 +64,8 @@ function Table<T>({
 }: TableProps<T>) {
   const { page, totalCount, isFetching } = metadata;
 
-  const totalPages = Math.ceil(totalCount / data.length);
+  // console.log(metadata)
+  const totalPages = Math.ceil(totalCount / metadata.pageSize);
   const [visibleData, setVisibleData] = useState<T[]>(data)
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [sortColumn, setSortColumn] = useState<string>("");

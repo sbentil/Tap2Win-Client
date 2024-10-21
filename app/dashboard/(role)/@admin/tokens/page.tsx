@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button } from "@/components/core";
 import NoRecordsFound from "@/components/empty";
@@ -8,12 +8,11 @@ import Table from "../../../../../components/tables/admin/tokens";
 import useTokens from "@/hooks/useTokens";
 
 const Tokens = () => {
-
   // State for handling pagination
   const [page, setPage] = useState(1);
   const limit = 10;
 
-  // Fetch events using the useEvents hook
+  // Fetch tokens using the useTokens hook
   const { data, isLoading, error, refetch } = useTokens({ page, limit });
 
   const tokens = data?.data || [];
@@ -25,33 +24,46 @@ const Tokens = () => {
     switch (action) {
       case "first":
         setPage(1);
+        refetch();
         break;
       case "last":
         setPage(totalPages);
+        refetch();
         break;
       case "next":
         if (page < totalPages) {
           setPage(page + 1);
+          refetch();
         }
         break;
       case "prev":
         if (page > 1) {
           setPage(page - 1);
+          refetch();
         }
+        break;
+      default:
         break;
     }
   };
+
+  // Refetch data whenever the page changes
+  useEffect(() => {
+    refetch();
+  });
 
   if (isLoading) {
     return <div>Loading tokens...</div>;
   }
 
   if (error) {
-    return <div>Error loading tokens: {error.message}
-      <pre>{JSON.stringify(error, null, 2)}</pre>
-      {/* retry text */}
-      <Button onClick={() => refetch()} className="">Retry</Button>
-    </div>;
+    return (
+      <div>
+        Error loading tokens: {error.message}
+        <pre>{JSON.stringify(error, null, 2)}</pre>
+        <Button onClick={() => refetch()} className="">Retry</Button>
+      </div>
+    );
   }
 
   return (
@@ -67,6 +79,7 @@ const Tokens = () => {
             page,
             totalCount,
             isFetching: isLoading,
+            pageSize: limit,
           }}
           onFirst={() => paginationHandler("first")}
           onPrev={() => paginationHandler("prev")}
@@ -74,9 +87,6 @@ const Tokens = () => {
           onLast={() => paginationHandler("last")}
         />
       )}
-      {
-
-      }
     </div>
   );
 };

@@ -140,7 +140,7 @@ const EventForm: React.FC<Props> = ({ data, onCancel }) => {
             id="price"
             label="Price"
             type="number"
-            placeholder="Enter Token Price"
+            placeholder="Enter Ticket Price"
             required
             onChange={form.handleChange}
             onBlur={form.handleBlur}
