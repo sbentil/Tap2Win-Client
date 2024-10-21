@@ -49,7 +49,7 @@ const UseOrganizerTokens = ({ event }: { event: string }) => {
     }, [page, refetch]);
 
     if (isLoading) {
-        return <div>Loading tokens...</div>;
+        return <div>Loading tickets...</div>;
     }
 
     if (error) {
