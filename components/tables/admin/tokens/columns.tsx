@@ -4,7 +4,7 @@ import { formatDate } from "@/helpers/datetime";
 
 export const Columns: TbColumnObj[] = [
   {
-    title: "Token",
+    title: "Ticket",
     options: {
       filter: true,
       sort: true,

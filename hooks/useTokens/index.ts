@@ -16,15 +16,12 @@ interface IGetUsersResponse {
 }
 
 
-const useTokens = (filters: ITokensPagination,) => {
+const useTokens = (filters: ITokensPagination) => {
     const { user } = useAuthContext();
     const query = useQuery<IGetUsersResponse, Error>({
-        queryKey: ['tokens', filters], // Query key includes the filters for refetching based on changes
+        queryKey: ['tokens', filters.page], // Query key includes the filters for refetching based on changes
         queryFn: () => user!.role === "admin" ? AdminService.fetchTokens(filters) : OrganizerService.fetchRaffles(filters),
-        staleTime: 5000,
-        // keepPreviousData: true,
     });
-    // console.log(">>",query.data  )
     return {
         data: query.data,
         isLoading: query.isLoading,
@@ -33,6 +30,7 @@ const useTokens = (filters: ITokensPagination,) => {
         refetch: query.refetch
     };
 };
+
 
 
 export default useTokens

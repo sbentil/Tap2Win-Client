@@ -34,12 +34,12 @@ const EventCard = ({ event }: { event: IEvent }) => {
                 </div>
                 <div className="flex items-center text-sm">
                     <Barcode className="mr-2 text-primary" />
-                    <strong className="text-primary">Tokens:</strong>
+                    <strong className="text-primary">Tickets:</strong>
                     <span className="ml-1 text-gray-700">{event.tokensCount}</span>
                 </div>
                 <div className="flex items-center text-sm">
                     <MoneyRecive className="mr-2 text-primary" />
-                    <strong className="text-primary">Total Amount (GHS):</strong>
+                    <strong className="text-primary">Total Sales (GHS):</strong>
                     <span className="ml-1 text-gray-700">{formatMoney(Number(event.tokensCount) * Number(event.price))}</span>
                 </div>
             </div>

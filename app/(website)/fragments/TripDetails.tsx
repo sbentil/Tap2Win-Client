@@ -56,12 +56,12 @@ const TripDetails: React.FC<Props> = ({ btnText, caption, places, action }) => {
             <div className='flex gap-4 font-semibold rounded-full w-max py-2 px-4 absolute bottom-0'>
                 <Link href="/tokens?my-tokens=1" passHref>
                     <p className='text-sm font-BeVietnamPro text-primary underline'>
-                        My Tokens
+                        My tickets
                     </p>
                 </Link>
                 <Link href="/tokens?verify=1" passHref>
                     <p className='text-sm font-BeVietnamPro text-primary underline'>
-                        Verify Token
+                        Verify Ticket
                     </p>
                 </Link>
             </div>
