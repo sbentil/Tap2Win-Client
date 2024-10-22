@@ -53,7 +53,7 @@ const TripDetails: React.FC<Props> = ({ btnText, caption, places, action }) => {
 
             </div>
             {/* Action Links for "My Tokens" and "Verify Token" */}
-            <div className='flex gap-4 font-semibold rounded-full w-max py-2 px-4 absolute bottom-0'>
+            <div className='flex gap-4 font-semibold rounded-full w-max py-2 px-4'>
                 <Link href="/tokens?my-tokens=1" passHref>
                     <p className='text-sm font-BeVietnamPro text-primary underline'>
                         My Tokens
@@ -72,7 +72,7 @@ const TripDetails: React.FC<Props> = ({ btnText, caption, places, action }) => {
 
 const TripDetailsPage: React.FC<{ onBuyClose: () => void }> = ({ onBuyClose }) => {
     const btnText = 'Buy Ticket';
-    const caption = 'Rotary D9104 Car Raffle';
+    const caption = 'D9104 Car Raffle';
     const places = [{ place: 'For USSD' }, { place: 'Dial' }, { place: '*713*2206#' }];
     // const places = [{ place: 'Rottary' }, { place: 'D9104' }, { place: 'Car' }, { place: 'Raffle' }];
 

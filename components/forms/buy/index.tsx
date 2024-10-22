@@ -26,7 +26,7 @@ const TokenPurchaseForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 .matches(/^0\d{9}$/, 'Phone number must be exactly 10 digits and start with 0')
                 .required('Phone number is required'),
             tokens_count: Yup.number()
-                .min(1, 'At least 1 token must be purchased')
+                .min(1, 'At least 1 ticket must be purchased')
                 .required('Number of tokens is required'),
             email: Yup.string().email('Invalid email address'),
         }),
@@ -61,14 +61,14 @@ const TokenPurchaseForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     };
 
     return (
-        <div className="flex flex-grow justify-center items-center">
+        <div className="flex justify-center items-center h-screen w-screen">
             <div className="w-full md:w-96 px-4 py-8 md:px-10 bg-gray-light shadow-lg rounded-md md:mx-20 mx-auto md:absolute md:bottom-6 md:left-0 fixed inset-x-0 bottom-0 flex flex-col justify-center items-center md:items-start">
                 {/* Close Button (Visible only on desktop) */}
                 <p onClick={onClose} className="cursor-pointer absolute top-2 right-2 text-white bg-primary w-8 h-8 rounded-full flex items-center justify-center hover:text-gray">
                     &#10005;
                 </p>
                 <h2 className="text-2xl font-bold text-center text-primary mb-4">
-                    Purchase Tokens
+                    Purchase Tickets
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-2 w-full">
                     <TextInput
@@ -95,7 +95,7 @@ const TokenPurchaseForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                         id="tokens_count"
                         type="number"
                         required
-                        label="Number of Tokens (GHC 10 each)"
+                        label="Number of Tickets (GHC 10/ticket)"
                         {...form}
                         handleChange={handleTokenChange}
                         min={1}

@@ -2,9 +2,11 @@
 
 import Countdown from './Countdown'
 import Link from 'next/link';
-import React from 'react'
+import React  from 'react'
 
-type Props = {}
+type Props = {
+    buying: boolean
+}
 
 const HeaderFragment = (props: Props) => {
     const targetDate = new Date('2025-03-24T00:00:00');
@@ -22,7 +24,9 @@ const HeaderFragment = (props: Props) => {
             </Link>
 
             <div className="absolute left-[22%] md:left-0 top-[12rem] md:top-0 md:relative md:mx-0">
-                <Countdown targetDate={targetDate} />
+                {
+                    !props.buying && <Countdown targetDate={targetDate} />
+                }
             </div>
         </div>
     )

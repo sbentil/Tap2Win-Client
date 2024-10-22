@@ -61,7 +61,9 @@ const Page = (props: Props) => {
                 <meta name="description" content="ROTARY D9104 CAR RAFFLE" />
                 <link rel="icon" href="/assets/logo.png" />
             </Head>
-            <HeaderFragment />
+
+            <HeaderFragment buying={buying} />
+
             <ImageCarousel />
             {
                 buying ? <TokenPurchaseForm onClose={() => handleBuyClick(false)} /> : (payment && paymentData) ? <PaymentConfirmation {...paymentData} /> : (
