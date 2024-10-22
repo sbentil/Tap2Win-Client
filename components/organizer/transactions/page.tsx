@@ -67,6 +67,7 @@ const UseTransactionsPage = ({ event }: { event: string }) => {
             page,
             totalCount,
             isFetching: isLoading,
+            pageSize: limit,
           }}
           onFirst={() => paginationHandler("first")}
           onPrev={() => paginationHandler("prev")}

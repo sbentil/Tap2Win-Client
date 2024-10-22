@@ -8,6 +8,12 @@ export interface IOrderItem {
     UnitPrice: number;
 }
 
+
+export interface IPaymentDetails {
+    MobileMoneyNumber: string;
+    PaymentType: string; // e.g., "mobilemoney"
+    Channel: string; // e.g., "mtn-gh"
+}
 export interface IPayment {
     PaymentType: string;
     AmountPaid: number;
@@ -32,12 +38,41 @@ export interface IOrderInfo {
     Items: IOrderItem[];
 }
 
+export interface ICheckoutResponse {
+    CheckoutId: string;
+    SalesInvoiceId: string;
+    ClientReference: string;
+    Status: string;
+    Amount: number;
+    CustomerPhoneNumber: string;
+    PaymentDetails: IPaymentDetails;
+    Description: string;
+}
+
+// Interface for the Status Check data
+export interface IStatusCheckData {
+    date: string;
+    status: "Paid" | "Unpaid";
+    transactionId: string;
+    externalTransactionId: string;
+    paymentMethod: string; // e.g., "mobilemoney"
+    clientReference: string;
+    currencyCode: string | null; // Can be null
+    amount: number;
+    charges: number; // The charges incurred
+    amountAfterCharges: number; // The amount after deducting charges
+    isFulfilled: boolean | null; // Can be null
+}
+
 export interface ITransaction {
     SessionId: string;
     OrderId: string;
     OrderInfo: IOrderInfo;
     event: IEvent
     _id: string
+    channel: "USSD" | "CHECKOUT";
+    CheckoutResponse?: ICheckoutResponse; // New property for checkout response
+    StatusCheckData?: IStatusCheckData; //
     createdAt: Date,
     updatedAt: Date
 }

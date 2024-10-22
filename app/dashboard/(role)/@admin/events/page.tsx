@@ -77,7 +77,7 @@ const Events = () => {
           metadata={{
             page,
             totalCount,
-            isFetching: isLoading,
+            isFetching: isLoading,pageSize: limit
           }}
           onFirst={() => paginationHandler("first")}
           onPrev={() => paginationHandler("prev")}
