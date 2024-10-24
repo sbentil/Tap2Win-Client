@@ -16,7 +16,7 @@ const Page = () => {
   // Fetch events using the useEvents hook
   const { data, isLoading, error, refetch } = useTransactions({ page, limit });
 
-  const tokens = data?.data || [];
+  const transactionss = data?.data || [];
   const totalCount = data?.meta.totalCount || 0;
 
   const paginationHandler = (action: "first" | "last" | "next" | "prev") => {
@@ -56,13 +56,13 @@ const Page = () => {
 
   return (
     <div className="h-[92vh] p-4">
-      {tokens.length === 0 ? (
+      {transactionss.length === 0 ? (
         <div className="flex h-screen flex-col items-center justify-center p-4">
-          <NoRecordsFound entity="Tokens" />
+          <NoRecordsFound entity="Transactionss" />
         </div>
       ) : (
         <Table
-          data={tokens}
+          data={transactionss}
           metadata={{
             page,
             totalCount,

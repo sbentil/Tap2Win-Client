@@ -12,17 +12,17 @@ export const Columns: TbColumnObj[] = [
         <span className="font-bold text-secondary">{value}</span>
       ),
     },
-    selector: (row: ITransaction) => row.OrderId,
+    selector: (row: ITransaction) => row.OrderId ?? row.CheckoutResponse?.CheckoutId
   },
   {
-    title: "Customer Name",
+    title: "Channel",
     options: { filter: false, sort: true },
-    selector: (row: ITransaction) => row.OrderInfo.CustomerName,
+    selector: (row: ITransaction) => row.channel  ?? "USSD",
   },
   {
     title: "Phone Number",
     options: { filter: true, sort: true },
-    selector: (row: ITransaction) => row.OrderInfo.CustomerMobileNumber ?? <i className="uppercase sm">null</i>,
+    selector: (row: ITransaction) => row.OrderInfo?.CustomerMobileNumber ?? row.CheckoutResponse?.CustomerPhoneNumber,
   },
   {
     title: "Event Name",

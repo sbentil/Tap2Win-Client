@@ -39,18 +39,17 @@ interface Props {
 
 const Table: React.FC<Props> = ({
   data,
+  metadata,
+  onFirst,
+  onLast,
+  onNext,
+  onPrev
 }) => {
   const { user } = useAuthContext()
   const [viewItem, setViewItem] = useState<boolean>(false);
   const [selected, setSelected] = useState<ITransaction | null>(null);
   const [showexport, setExport] = useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] = useState<string>("")
-  const [metadata, setMetadata] = useState({
-    page: 1,
-    totalCount: data.length,
-    isFetching: false,
-    pageSize: 10
-  });
 
   const onSelect = (item: any) => {
     setSelected(item);
@@ -62,7 +61,7 @@ const Table: React.FC<Props> = ({
       <div className="flex items-center gap-4">
         <Button variant="primary" className="gap-2" onClick={() => setExport(true)}>
           <ExportCircle />
-          Export Tokens
+          Export Transactions
         </Button>
       </div>
       {
@@ -77,29 +76,6 @@ const Table: React.FC<Props> = ({
   )
 
 
-  const paginationHandler = (action: "first" | "last" | "next" | "prev") => {
-    const totalPages = Math.ceil(metadata.totalCount / 10); // Assuming 10 items per page
-
-    switch (action) {
-      case "first":
-        setMetadata({ ...metadata, page: 1 });
-        break;
-      case "last":
-        setMetadata({ ...metadata, page: totalPages });
-        break;
-      case "next":
-        if (metadata.page < totalPages) {
-          setMetadata({ ...metadata, page: metadata.page + 1 });
-        }
-        break;
-      case "prev":
-        if (metadata.page > 1) {
-          setMetadata({ ...metadata, page: metadata.page - 1 });
-        }
-        break;
-    }
-  };
-
   return (
     <>
       <TableComponent
@@ -110,16 +86,16 @@ const Table: React.FC<Props> = ({
         tableContainerClasses={"h-full w-full"}
         metadata={metadata}
         filterRender={<ActionFilters />}
-        onFirst={() => paginationHandler("first")}
-        onPrev={() => paginationHandler("prev")}
-        onNext={() => paginationHandler("next")}
-        onLast={() => paginationHandler("last")}
+        onFirst={onFirst}
+        onPrev={onPrev}
+        onNext={onNext}
+        onLast={onLast}
       />
       {viewItem && selected && (
         <ViewModal state={viewItem} onClose={setViewItem} data={selected} />
       )}
       {
-        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} data={data[0]} type="transactions" />
+        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} data={data[1]} type="transactions" />
       }
     </>
   );
