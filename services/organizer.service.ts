@@ -84,6 +84,7 @@ class OrganizerService {
 
 
     static fetchAndExportData = async (url: string, callback: IServerCallback) => {
+        console.log("Fetching Export data on URL", url);
         try {
             const { data } = await Axios({
                 url,
@@ -96,6 +97,7 @@ class OrganizerService {
                 callback(data.message);
             }
         } catch (e: any) {
+            console.log("Error fetching Export data", e);
             const message = e?.response?.data?.error || e?.message || "Check console for error";
             callback(message);
         }

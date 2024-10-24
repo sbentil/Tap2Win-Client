@@ -1,27 +1,16 @@
 "use client";
 
+import { ITransaction, transactionTemplate } from "@/interfaces/transaction";
+
 import { Button } from "@/components/core";
 import { Columns } from "./columns";
 import EventSelector from "@/components/selectors/event";
 import { ExportCircle } from "iconsax-react";
 import { ExportDataModal } from "@/components/modals";
-import { ITransaction } from "@/interfaces/transaction";
 import { TableComponent } from "@/components/table";
 import ViewModal from "./view";
 import { useAuthContext } from "@/hooks/userContext";
 import { useState } from "react";
-
-const transactionFields = [
-  ['SessionId', 'OrderId', 'event'],
-  ['_id', 'createdAt', 'updatedAt'],
-  ['CustomerMobileNumber', 'CustomerEmail', 'CustomerName'],
-  ['Status', 'OrderDate', 'Currency'],
-  ['BranchName', 'IsRecurring', 'RecurringInvoiceId'],
-  ['Subtotal', 'PaymentType', 'AmountPaid'],
-  ['AmountAfterCharges', 'PaymentDate', 'PaymentDescription'],
-  ['IsSuccessful', 'Items', 'UnitPrice']
-];
-
 
 interface Props {
   data: ITransaction[];
@@ -95,7 +84,7 @@ const Table: React.FC<Props> = ({
         <ViewModal state={viewItem} onClose={setViewItem} data={selected} />
       )}
       {
-        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} data={data[1]} type="transactions" />
+        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} template={transactionTemplate} type="transactions" />
       }
     </>
   );

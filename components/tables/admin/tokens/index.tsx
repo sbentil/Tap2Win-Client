@@ -1,25 +1,16 @@
 "use client";
 
+import { IToken, tokenTemplate } from "@/interfaces/token";
+
 import { Button } from "@/components/core";
 import { Columns } from "./columns";
 import EventSelector from "@/components/selectors/event";
 import { ExportCircle } from "iconsax-react";
 import { ExportDataModal } from "@/components/modals";
-import { IToken } from "@/interfaces/token";
 import { TableComponent } from "@/components/table";
 import ViewModal from "./view";
 import { useAuthContext } from "@/hooks/userContext";
 import { useState } from "react";
-
-const tokenFields = [
-  'name',
-  'phone',
-  'token',
-  'event',
-  '_id',
-  'createdAt',
-  'updatedAt'
-];
 
 interface Props {
   data: IToken[];
@@ -97,7 +88,7 @@ const Table: React.FC<Props> = ({
       )}
 
       {
-        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} data={data[0]} type="tokens" />
+        showexport && <ExportDataModal state={showexport} onClose={() => setExport(false)} template={tokenTemplate} type="tokens" />
       }
 
     </>

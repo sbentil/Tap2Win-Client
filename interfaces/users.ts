@@ -19,3 +19,15 @@ export interface IUserInput {
 export interface IUserPagination extends IPagination {
   role?: "admin" | "organizer"
 }
+
+
+export const userTemplate: IUser = {
+  _id: 'user_id_placeholder',
+  name: 'Jane Doe',
+  email: 'jane.doe@example.com',
+  role: 'organizer', // Can be 'admin' or 'organizer'
+  status: 'active',  // Can be 'active' or 'inactive'
+  phone: '1234567890',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+};
