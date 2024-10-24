@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 
+import ComingSoon from '@/components/soon';
 import Head from 'next/head';
 import HeaderFragment from './fragments/Header';
 import ImageCarousel from './fragments/ImageCarousel';
@@ -66,7 +67,7 @@ const Page = (props: Props) => {
 
             <ImageCarousel />
             {
-                buying ? <TokenPurchaseForm onClose={() => handleBuyClick(false)} /> : (payment && paymentData) ? <PaymentConfirmation {...paymentData} /> : (
+                buying ? <ComingSoon onClose={() => handleBuyClick(false)} /> : (payment && paymentData) ? <PaymentConfirmation {...paymentData} /> : (
                     <div className="w-full md:w-[750px] md:h-1/3 md:px-16 py-4 absolute bottom-4 md:bottom-6">
                         <p className='px-4 text-xl font-bold text-[#F3A118] font-GeistMono text-shadow-lg'>
                             A raffle to fundraise to
