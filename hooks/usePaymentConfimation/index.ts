@@ -10,7 +10,7 @@ interface IPaymentConfimation {
 const usePaymentVerification = (ref: string,) => {
     const query = useQuery<IPaymentConfimation, Error>({
         queryKey: ['payment confimation', ref], // Query key includes the filters for refetching based on changes
-        queryFn: () => GeneralService.verifyPseudoPayment({ ref }),
+        queryFn: () => GeneralService.verifyPayment({ ref }),
         staleTime: 5000,
         // keepPreviousData: true,
     });

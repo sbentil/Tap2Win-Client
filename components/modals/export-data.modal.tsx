@@ -2,28 +2,32 @@ import React, { useEffect, useState } from 'react';
 
 import Button from '@/components/core/button';
 import Modal from '@/components/modal';
-import { cn } from '@/lib/utils';
 import OrganizerService from '@/services/organizer.service';
+import { __exportDataToExcel } from '@/helpers/export';
+import { cn } from '@/lib/utils';
+import { string } from 'yup';
 import toasts from '@/utils/toasts';
 import { usePathname } from 'next/navigation';
-import { __exportDataToExcel } from '@/helpers/export';
 
 interface Props<T> {
   state: boolean;
   onClose: (state: boolean) => void;
+  _event?: string,
   type: 'tokens' | 'transactions';
-  data: T; // The interface object (e.g., ITransaction)
+  template: T; // The interface object (e.g., ITransaction)
 }
 
 const ExportDataModal = <T extends Record<string, any>>({
   state,
   onClose,
   type,
-  data,
+  template, // Changed from data to template
+  _event,
 }: Props<T>) => {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [event, setEvent] = useState<string | null>(null);
+  const [selectAll, setSelectAll] = useState(false); // State to track Select All
   const pathname = usePathname();
 
   const realType = {
@@ -35,6 +39,12 @@ const ExportDataModal = <T extends Record<string, any>>({
     setSelectedFields((prev) =>
       prev.includes(field) ? prev.filter((f) => f !== field) : [...prev, field]
     );
+  };
+
+  // Handle Select All checkbox
+  const handleSelectAllChange = () => {
+    setSelectAll((prev) => !prev);
+    setSelectedFields(selectAll ? [] : fieldNames); // Select all or clear selection
   };
 
   const handleProceed = () => {
@@ -53,19 +63,24 @@ const ExportDataModal = <T extends Record<string, any>>({
           toasts.error('Export 👺', err);
         } else {
           console.log(data);
-          console.log("selected Fields", selectedFields)
-          __exportDataToExcel(data.data, selectedFields, type)
+          console.log('Selected Fields', selectedFields);
+          __exportDataToExcel(data.data, selectedFields, type);
         }
       }
     );
   };
 
   useEffect(() => {
-    const event = pathname.split('/')[2];
-    setEvent(event);
+    if (_event) {
+      setEvent(_event)
+    }
+    else {
+      const event = pathname.split('/')[2];
+      setEvent(event);
+    }
   }, [pathname]);
 
-  // Extract field names dynamically
+  // Extract field names dynamically from the template instead of actual data
   const extractFieldNames = (obj: Record<string, any>, parentKey = ''): string[] => {
     return Object.keys(obj).flatMap((key) => {
       const fullKey = parentKey ? `${parentKey}.${key}` : key;
@@ -76,17 +91,36 @@ const ExportDataModal = <T extends Record<string, any>>({
     });
   };
 
-  const fieldNames = extractFieldNames(data);
+  const fieldNames = extractFieldNames(template); // Use the template for field extraction
 
   return (
-    <Modal isOpen={state} onClose={() => onClose(false)} title="Export Data" size="xl">
+    <Modal isOpen={state} onClose={() => onClose(false)} title={`Export ${type === "tokens" ? "Tickets" : "Transactions"} Data`} size="xl">
       <div className="flex flex-col w-full px-4 gap-y-6">
-        <div className={cn(
-          "w-full grid gap-4",
-          type === "tokens" ? "grid-cols-3" : "grid-cols-1"
-        )}>
+        {/* Select All Checkbox */}
+        <div className="flex items-center mb-4">
+          <input
+            type="checkbox"
+            id="selectAll"
+            checked={selectAll}
+            onChange={handleSelectAllChange}
+            className="mr-2"
+          />
+          <label
+            htmlFor="selectAll"
+            className="font-bold italic text-lg"
+          >
+            Select All
+          </label>
+        </div>
+
+        <div
+          className={cn(
+            'w-full grid gap-4',
+            type === 'tokens' ? 'grid-cols-3' : 'grid-cols-1'
+          )}
+        >
           {fieldNames.map((field) => {
-            if (field.includes("__")) return
+            if (field.includes('__')) return;
             return (
               <div key={field} className="flex items-center">
                 <input
@@ -94,14 +128,15 @@ const ExportDataModal = <T extends Record<string, any>>({
                   id={field}
                   name={field}
                   value={field}
+                  checked={selectedFields.includes(field)} // Check if field is selected
                   onChange={() => handleFieldChange(field)}
                   className="mr-2"
                 />
                 <label htmlFor={field} className="text-text">
-                  {field.replaceAll(".", " > ")}
+                  {field.replaceAll('.', ' > ')}
                 </label>
               </div>
-            )
+            );
           })}
         </div>
 

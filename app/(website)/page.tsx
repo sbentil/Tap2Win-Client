@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 
+import ComingSoon from '@/components/soon';
 import Head from 'next/head';
 import HeaderFragment from './fragments/Header';
 import ImageCarousel from './fragments/ImageCarousel';

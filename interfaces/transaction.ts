@@ -81,3 +81,73 @@ export interface ITransaction {
 export interface ITokensPagination extends IPagination {
     event?: string
 }
+
+
+
+
+export const transactionTemplate = {
+    SessionId: 'session_id_placeholder',
+    OrderId: 'order_id_placeholder',
+    OrderInfo: {
+        CustomerMobileNumber: '0000000000',
+        CustomerEmail: null,
+        CustomerName: 'John Doe',
+        Status: 'Pending',
+        OrderDate: new Date().toISOString(),
+        Currency: 'USD',
+        BranchName: 'Main Branch',
+        IsRecurring: false,
+        RecurringInvoiceId: null,
+        Subtotal: 100,
+        Payment: {
+            PaymentType: 'mobilemoney',
+            AmountPaid: 100,
+            AmountAfterCharges: 98,
+            PaymentDate: new Date().toISOString(),
+            PaymentDescription: 'Payment for order',
+            IsSuccessful: true,
+        },
+        Items: [
+            {
+                ItemId: 'item_id_placeholder',
+                Name: 'Sample Item',
+                Quantity: 1,
+                UnitPrice: 100,
+            },
+        ],
+    },
+    event: {
+        _id: 'event_id_placeholder',
+        name: 'Sample Event',
+        description: 'Sample Event Description',
+    },
+    _id: 'transaction_id_placeholder',
+    channel: 'CHECKOUT',
+    CheckoutResponse: {
+        CheckoutId: 'checkout_id_placeholder',
+        SalesInvoiceId: 'sales_invoice_id_placeholder',
+        ClientReference: 'client_reference_placeholder',
+        Status: 'Pending',
+        Amount: 100,
+        CustomerPhoneNumber: '0000000000',
+        PaymentDetails: {
+            MobileMoneyNumber: '0000000000',
+            PaymentType: 'mobilemoney',
+            Channel: 'mtn-gh',
+        },
+        Description: 'Checkout payment',
+    },
+    StatusCheckData: {
+        date: new Date().toISOString(),
+        status: 'Paid',
+        transactionId: 'transaction_id_placeholder',
+        externalTransactionId: 'external_transaction_id_placeholder',
+        paymentMethod: 'mobilemoney',
+        clientReference: 'client_reference_placeholder',
+        currencyCode: 'USD',
+        amount: 100,
+        charges: 2,
+        amountAfterCharges: 98,
+        isFulfilled: true,
+    },
+};

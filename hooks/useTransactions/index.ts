@@ -26,6 +26,8 @@ const useTransactions = (filters: ITokensPagination) => {
         // keepPreviousData: true,
     });
 
+    // console.log("transactions", query.data?.data);
+
     return {
         data: query.data,
         isLoading: query.isLoading,

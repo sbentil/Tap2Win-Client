@@ -39,7 +39,8 @@ export const __exportDataToExcel = (
                 }
             });
 
-            filteredItem[field] = value;
+            // If the value is null or undefined, set it to 'NULL'
+            filteredItem[field] = value !== undefined && value !== null ? value : 'NULL';
         });
         return filteredItem;
     });
@@ -59,3 +60,4 @@ export const __exportDataToExcel = (
     // Write the Excel file and trigger download
     XLSX.writeFile(workbook, `${fileName}-${new Date().toISOString()}.xlsx`);
 };
+
