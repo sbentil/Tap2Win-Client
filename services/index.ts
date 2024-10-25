@@ -100,15 +100,15 @@ class GeneralService {
         try {
             const { data } = await Axios({
                 method: "POST",
-                url: "payments/verify-payment",
+                url: "payments/status-check",
                 data: input
             })
 
             console.log(data)
-           return data
+            return data
 
         } catch (e: any) {
-            console.log(`FETCH "payments/verify-payment" error`, e);
+            console.log(`FETCH "payments/status-check" error`, e);
             const message =
                 e?.response?.data?.error || e?.message || "Check console for error";
             return message
@@ -124,7 +124,7 @@ class GeneralService {
             })
 
             console.log(data)
-           return data
+            return data
 
         } catch (e: any) {
             console.log(`FETCH "payments/pseudo-verify-payment" error`, e);
