@@ -14,7 +14,7 @@ export interface TbColumnObj {
     sort: boolean;
     customBodyRender?: (value: any) => JSX.Element;
   };
-  selector: (row: any) => any;
+  selector: (row: any, i?:number) => any;
 }
 
 interface TableAction<T> {
@@ -240,8 +240,8 @@ function Table<T>({
                             className="py-2 px-4"
                           >
                             {column.options.customBodyRender
-                              ? column.options.customBodyRender(column.selector(item))
-                              : column.selector(item)}
+                              ? column.options.customBodyRender(column.selector(item, index))
+                              : column.selector(item, index)}
                           </td>
                         ))}
                         {actions &&

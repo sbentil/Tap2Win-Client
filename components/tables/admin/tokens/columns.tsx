@@ -4,10 +4,15 @@ import { formatDate } from "@/helpers/datetime";
 
 export const Columns: TbColumnObj[] = [
   {
+    title: "S/N",
+    options: { filter: false, sort: false },
+    selector: (row: IToken, i: any) => i + 1,
+  },
+  {
     title: "Ticket",
     options: {
-      filter: true,
-      sort: true,
+      filter: false,
+      sort: false,
       customBodyRender: (value: string) => (
         <span className="font-bold text-secondary">{value}</span>
       ),
