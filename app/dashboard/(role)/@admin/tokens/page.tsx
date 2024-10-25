@@ -10,7 +10,7 @@ import useTokens from "@/hooks/useTokens";
 const Tokens = () => {
   // State for handling pagination
   const [page, setPage] = useState(1);
-  const limit = 10;
+  const limit = 100;
 
   // Fetch tokens using the useTokens hook
   const { data, isLoading, error, refetch } = useTokens({ page, limit });

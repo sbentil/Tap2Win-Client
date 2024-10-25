@@ -45,11 +45,23 @@ export const __exportDataToExcel = (
         return filteredItem;
     });
 
-    // Format headers for the selected fields
-    const formattedHeaders = selectedFields.map(formatHeader);
+    // Map selected fields to formatted headers to ensure no duplication
+    const headerMap: Record<string, string> = {};
+    selectedFields.forEach((field) => {
+        headerMap[field] = formatHeader(field);
+    });
 
-    // Add headers to the worksheet
-    const worksheet = XLSX.utils.json_to_sheet(filteredData, { header: formattedHeaders });
+    // Convert filtered data to worksheet with explicit headers
+    const worksheet = XLSX.utils.json_to_sheet(filteredData, { header: selectedFields });
+
+    // Rename headers in worksheet to formatted headers
+    const headerRow = worksheet['!ref']?.split(':')[0];
+    if (headerRow) {
+        selectedFields.forEach((field, index) => {
+            const cellRef = XLSX.utils.encode_cell({ r: 0, c: index });
+            worksheet[cellRef].v = headerMap[field];
+        });
+    }
 
     // Create a new workbook
     const workbook = XLSX.utils.book_new();

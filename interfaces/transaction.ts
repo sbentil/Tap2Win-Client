@@ -51,17 +51,24 @@ export interface ICheckoutResponse {
 
 // Interface for the Status Check data
 export interface IStatusCheckData {
-    date: string;
-    status: "Paid" | "Unpaid";
-    transactionId: string;
-    externalTransactionId: string;
-    paymentMethod: string; // e.g., "mobilemoney"
-    clientReference: string;
-    currencyCode: string | null; // Can be null
-    amount: number;
-    charges: number; // The charges incurred
-    amountAfterCharges: number; // The amount after deducting charges
-    isFulfilled: boolean | null; // Can be null
+    StartDate: string;
+    InvoiceStatus: string;
+    TransactionStatus: string
+    TransactionId: string;
+    NetworkTransactionId: string;
+    TransactionType : string;
+    CheckoutId: string; 
+    InvoiceToken: string;
+    PaymentMethod: string;
+    ClientReference: string;
+    CurrencyCode: string | null; // Can be null
+    TransactionAmount: string;
+    Fee: number;
+    AmountAfterFees: number
+    MobileNumber: string;
+    Disputed: string;
+    ProviderResponseCode: string;
+    ProviderDescription: string
 }
 
 export interface ITransaction {
@@ -138,16 +145,23 @@ export const transactionTemplate = {
         Description: 'Checkout payment',
     },
     StatusCheckData: {
-        date: new Date().toISOString(),
-        status: 'Paid',
-        transactionId: 'transaction_id_placeholder',
-        externalTransactionId: 'external_transaction_id_placeholder',
-        paymentMethod: 'mobilemoney',
-        clientReference: 'client_reference_placeholder',
-        currencyCode: 'USD',
-        amount: 100,
-        charges: 2,
-        amountAfterCharges: 98,
-        isFulfilled: true,
-    },
+        StartDate: new Date().toISOString(),
+        InvoiceStatus: 'Pending',
+        TransactionStatus: 'Pending',
+        TransactionId: 'transaction_id_placeholder',
+        NetworkTransactionId: 'network_transaction_id_placeholder',
+        TransactionType: 'Payment',
+        CheckoutId: 'checkout_id_placeholder',
+        InvoiceToken: 'invoice_token_placeholder',
+        PaymentMethod: 'mobilemoney',
+        ClientReference: 'client_reference_placeholder',
+        CurrencyCode: 'USD',
+        TransactionAmount: '100',
+        Fee: 2,
+        AmountAfterFees: 98,
+        MobileNumber: '0000000000',
+        Disputed: 'No',
+        ProviderResponseCode: '000',
+        ProviderDescription: 'Success',  
+    }
 };

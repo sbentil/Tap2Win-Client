@@ -1,16 +1,15 @@
-import { Barcode, Calendar, Clock, Code1, MoneyRecive } from 'iconsax-react';
+import { Barcode, Calendar, Clock, Code1, LayoutMaximize, MoneyRecive } from 'iconsax-react';
 
+import { Button } from '../core';
 import { IEvent } from '@/interfaces/event';
 import Link from 'next/link';
 import React from 'react';
-import { Link as RouterLink } from 'lucide-react';
 import { formatDate } from '@/helpers/datetime';
 import { formatMoney } from '@/helpers/string';
 
 const EventCard = ({ event }: { event: IEvent }) => {
-    // console.log({ event })
     return (
-        <Link href={`/dashboard/${event._id}`} key={event._id} className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out group">
+        <div className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out group">
             <h2 className="text-2xl font-semibold text-primary group-hover:text-secondary transition-colors duration-300">
                 {event.name}
             </h2>
@@ -44,18 +43,26 @@ const EventCard = ({ event }: { event: IEvent }) => {
                 </div>
             </div>
 
-            {/* Created at and Updated at */}
-            <div className="mt-4 border-t pt-3 space-y-2 text-xs text-gray-500">
-                <div className="flex items-center">
-                    <Clock className="mr-2" />
-                    <span>Created at: {formatDate(event.createdAt)}</span>
+            {/* Created at, Updated at, and Open Button */}
+            <div className="mt-4 border-t pt-3 flex items-center justify-between text-xs text-gray-500">
+                <div className="space-y-2">
+                    <div className="flex items-center">
+                        <Clock className="mr-2" />
+                        <span>Created at: {formatDate(event.createdAt)}</span>
+                    </div>
+                    <div className="flex items-center">
+                        <Clock className="mr-2" />
+                        <span>Updated at: {formatDate(event.updatedAt)}</span>
+                    </div>
                 </div>
-                <div className="flex items-center">
-                    <Clock className="mr-2" />
-                    <span>Updated at: {formatDate(event.updatedAt)}</span>
-                </div>
+                <Button variant='outline' type="link" href={`/dashboard/${event._id}`} className="ml-auto">
+                    <span className='flex items-center gap-x-2'>
+                        <LayoutMaximize />
+                        Expand
+                    </span>
+                </Button>
             </div>
-        </Link>
+        </div>
     );
 };
 
