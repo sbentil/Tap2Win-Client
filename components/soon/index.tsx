@@ -4,7 +4,7 @@ import { Button } from '@/components/core'; // Assuming you have this Button com
 
 const ComingSoon: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const calculateTimeLeft = () => {
-    const targetDate = new Date('2024-10-25T12:00:00'); // Set your coming soon date here
+    const targetDate = new Date('2024-10-27T23:59:59'); // Set your coming soon date here
     const difference = +targetDate - +new Date();
     let timeLeft = {
       days: 0,
