@@ -10,7 +10,7 @@ import useTokens from "@/hooks/useTokens";
 const UseOrganizerTokens = ({ event }: { event: string }) => {
     // State for handling pagination
     const [page, setPage] = useState(1);
-    const limit = 50;
+    const limit = 100;
 
     // Fetch events using the useEvents hook
     const { data, isLoading, error, refetch } = useTokens({ page, limit, event });
