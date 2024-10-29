@@ -1,9 +1,9 @@
 import { IToken, ITokensPagination } from '../../interfaces/token';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import AdminService from '@/services/admin.service';
 import OrganizerService from '@/services/organizer.service';
 import { useAuthContext } from '../userContext';
-import { useQuery } from '@tanstack/react-query';
 
 interface IGetUsersResponse {
     data: IToken[];
@@ -16,20 +16,43 @@ interface IGetUsersResponse {
 }
 
 
-const useTokens = (filters: ITokensPagination) => {
+
+const useTokens = (initialFilters: ITokensPagination) => {
     const { user } = useAuthContext();
+    const queryClient = useQueryClient();
+
+    // Standard query setup with the initial filters
     const query = useQuery<IGetUsersResponse, Error>({
-        queryKey: ['tokens', filters.page], // Query key includes the filters for refetching based on changes
-        queryFn: () => user!.role === "admin" ? AdminService.fetchTokens(filters) : OrganizerService.fetchRaffles(filters),
+        queryKey: ['tokens', initialFilters],
+        queryFn: () =>
+            user!.role === "admin"
+                ? AdminService.fetchTokens(initialFilters)
+                : OrganizerService.fetchRaffles(initialFilters),
+        enabled: !!user, // Ensure user is defined before running query
     });
+
+    // Custom refetch function to fetch with updated filters
+    const refetchWithFilters = (newFilters: ITokensPagination) => {
+        return queryClient.fetchQuery({
+            queryKey: ['tokens', newFilters],
+            queryFn: () =>
+                user!.role === "admin"
+                    ? AdminService.fetchTokens(newFilters)
+                    : OrganizerService.fetchRaffles(newFilters),
+        });
+    };
+
     return {
         data: query.data,
         isLoading: query.isLoading,
         error: query.error,
         status: query.status,
-        refetch: query.refetch
+        refetch: refetchWithFilters,
     };
 };
+
+// export default useTokens;
+
 
 
 
