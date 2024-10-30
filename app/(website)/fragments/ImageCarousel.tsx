@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const ImageCarousel = () => {
     const images = [
-        "/assets/car-display-1.png",
+        "/assets/dcar-display-1.png",
         "/assets/car-display-2.jpg",
 
     ];
