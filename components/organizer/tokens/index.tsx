@@ -24,6 +24,7 @@ const UseOrganizerTokens = ({ event }: { event: string }) => {
         switch (action) {
             case "first":
                 setPage(1);
+                // refetch({ page: 1, limit, event })
                 break;
             case "last":
                 setPage(totalPages);
@@ -45,8 +46,8 @@ const UseOrganizerTokens = ({ event }: { event: string }) => {
 
 
     useEffect(() => {
-        refetch();
-    }, [page, refetch]);
+        refetch({ page, limit, event })
+    }, [page, refetch, event]);
 
     if (isLoading) {
         return <div>Loading tickets...</div>;
@@ -56,7 +57,7 @@ const UseOrganizerTokens = ({ event }: { event: string }) => {
         return <div>Error loading tokens: {error.message}
             <pre>{JSON.stringify(error, null, 2)}</pre>
             {/* retry text */}
-            <Button onClick={() => refetch()} className="">Retry</Button>
+            <Button onClick={() => refetch({ page, limit, event })} className="">Retry</Button>
         </div>;
     }
 

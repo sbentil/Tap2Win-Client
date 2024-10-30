@@ -37,8 +37,11 @@ const PaymentConfirmation: React.FC<IPaymentData> = ({ reference, ...rest }) => 
                             <p className="text-center text-primary">{data.message}</p>
                             {
                                 data.success && (
+<>
                                     <p className='text-center text-primary italic text-sm'> You will recieve your ticket shortly via SMS and E-mail (if provided)</p>
-                                )
+                                    <p className='text-center text-red-700 italic text-sm'>Check your spam folder if you provided your email address and did not receive an email. </p>
+</>                                
+)
                             }
                         </div>
                     )

@@ -24,22 +24,20 @@ const Tokens = () => {
     switch (action) {
       case "first":
         setPage(1);
-        refetch();
         break;
       case "last":
         setPage(totalPages);
-        refetch();
         break;
       case "next":
         if (page < totalPages) {
           setPage(page + 1);
-          refetch();
+
         }
         break;
       case "prev":
         if (page > 1) {
           setPage(page - 1);
-          refetch();
+
         }
         break;
       default:
@@ -49,7 +47,7 @@ const Tokens = () => {
 
   // Refetch data whenever the page changes
   useEffect(() => {
-    refetch();
+    refetch({ page, limit })
   });
 
   if (isLoading) {
@@ -61,7 +59,7 @@ const Tokens = () => {
       <div>
         Error loading tokens: {error.message}
         <pre>{JSON.stringify(error, null, 2)}</pre>
-        <Button onClick={() => refetch()} className="">Retry</Button>
+        <Button onClick={() => refetch({ page, limit })} className="">Retry</Button>
       </div>
     );
   }
