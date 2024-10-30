@@ -1,10 +1,12 @@
 "use client"
+
+import { useEffect, useState } from 'react';
+
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
 
 const ImageCarousel = () => {
     const images = [
-        "/assets/car-display-1.jpg",
+        "/assets/car-display-1.png",
         "/assets/car-display-2.jpg",
 
     ];
