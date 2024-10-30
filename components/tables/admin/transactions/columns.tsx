@@ -1,5 +1,6 @@
 import { ITransaction } from "@/interfaces/transaction";
 import { TbColumnObj } from "@/components/table/table";
+import { cn } from "@/lib/utils";
 import { formatDate } from "@/helpers/datetime";
 
 export const Columns: TbColumnObj[] = [
@@ -8,16 +9,23 @@ export const Columns: TbColumnObj[] = [
     options: {
       filter: true,
       sort: true,
-      customBodyRender: (value: string) => (
-        <span className="font-bold text-secondary">{value}</span>
-      ),
+      // customBodyRender: (value: string) => (
+      //   <span className={cn("font-bold text-secondary bg-green-500 py-1 px-3")}>{value}</span>
+      // ),
     },
-    selector: (row: ITransaction) => row.OrderId ?? row.CheckoutResponse?.CheckoutId
+    selector: (row: ITransaction) => <span className={cn(
+      "font-bold text-secondary bg-green-500 py-1 px-3",
+      row.OrderInfo?.Payment?.IsSuccessful
+        ? "bg-green-500"
+        : "bg-red-500",
+
+      row.StatusCheckData?.TransactionStatus == "Failed" ? "bg-red-500" : "bg-green-500"
+    )}>{row.OrderId ?? row.CheckoutResponse?.CheckoutId}</span>
   },
   {
     title: "Channel",
     options: { filter: false, sort: true },
-    selector: (row: ITransaction) => row.channel  ?? "USSD",
+    selector: (row: ITransaction) => row.channel ?? "USSD",
   },
   {
     title: "Phone Number",
