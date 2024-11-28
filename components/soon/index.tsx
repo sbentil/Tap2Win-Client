@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Button } from '@/components/core'; // Assuming you have this Button component
+import { Button } from '@/components/core';
 
 const ComingSoon: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const calculateTimeLeft = () => {
