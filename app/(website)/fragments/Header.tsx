@@ -9,7 +9,7 @@ type Props = {
 }
 
 const HeaderFragment = (props: Props) => {
-    const targetDate = new Date('2025-03-24T00:00:00');
+    const targetDate = new Date('2025-04-26T00:00:00');
 
     return (
         <div className='absolute flex flex-col md:flex-row   md:p-16 justify-between items-center text-white  md:w-full h-[100px] rounded-3xl z-10'>
